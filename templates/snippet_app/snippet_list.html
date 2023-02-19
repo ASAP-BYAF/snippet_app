@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List</title>
+</head>
+<body>
+    {% for i_lang in lang_list %}
+        <p>{{i_lang.lang}}</p>
+    {% endfor %}
+    {% for i_type in type_list %}
+        <p>{{i_type.type}}</p>
+    {% endfor %}
+    {% for i_snippet in object_list %}
+        <p>{{i_snippet.title}} --- {{i_snippet.code}}</p>
+    {% endfor %}
+
+</body>
+</html>
