@@ -16,4 +16,9 @@ class SnippetListView(ListView):
             'type_list': Type.objects.all(),
         }
         return super().get_context_data(**my_dict)
+    def get_queryset(self):
+        lang = Lang.objects.get(id=self.request.GET.get('lang', 1))
+        type = lang.type_set.get(id=self.request.GET.get('type', 1))
+        self.queryset = type.snippet_set.all()
+        return super().get_queryset()
 
