@@ -9,7 +9,7 @@
         <p><a href="{% url 'snippet_app:list' %}?lang={{i_lang.id}}">{{i_lang.lang}}</a></p>
     {% endfor %}
     {% for i_type in type_list %}
-        <p>{{i_type.type}}</p>
+        <p><a href="{% url 'snippet_app:list' %}?lang={{lang.id}}&type={{i_type.id}}">{{i_type.type}}</a></p>
     {% endfor %}
     {% for i_snippet in object_list %}
         <p>{{i_snippet.title}} --- {{i_snippet.code}}</p>

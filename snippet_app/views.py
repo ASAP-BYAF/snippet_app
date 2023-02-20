@@ -14,6 +14,7 @@ class SnippetListView(ListView):
         lang = Lang.objects.get(id=self.request.GET.get('lang', 1))
         my_dict = {
             'lang_list': Lang.objects.all(),
+            'lang': lang,
             'type_list': lang.type_set.all(),
         }
         return super().get_context_data(**my_dict)
