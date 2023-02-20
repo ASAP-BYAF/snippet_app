@@ -12,7 +12,7 @@ class Type(models.Model):
     ### 他のテーブルとの関連
     lang = models.ForeignKey(Lang, on_delete=models.PROTECT)
     def __str__(self):
-        return f'<ID = {self.id}> {self.type}'
+        return f'<ID = {self.id}> {self.lang.lang} --- {self.type}'
 
 class Snippet(models.Model):
     title = models.CharField(max_length=100)
@@ -21,5 +21,6 @@ class Snippet(models.Model):
     ### 他のテーブルとの関連
     type = models.ForeignKey(Type, on_delete=models.PROTECT)
     def __str__(self):
-        return f'<ID = {self.id}> {self.title}'
+        return f'<ID = {self.id}> {self.type.lang.lang} --- '\
+            f'{self.type.type} --- {self.title}'
 
