@@ -16,6 +16,7 @@ class Type(models.Model):
 
 class Snippet(models.Model):
     title = models.CharField(max_length=100)
+    explanation = models.TextField(blank=True, null=True)
     code = models.TextField()
 
     ### 他のテーブルとの関連

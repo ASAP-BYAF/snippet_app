@@ -12,7 +12,11 @@
         <p><a href="{% url 'snippet_app:list' %}?lang={{lang.id}}&type={{i_type.id}}">{{i_type.type}}</a></p>
     {% endfor %}
     {% for i_snippet in object_list %}
-        <p>{{i_snippet.title}} --- {{i_snippet.code}}</p>
+        <p>{{i_snippet.title}}</p>
+        {% if i_snippet.explanation is not None %}
+            <p>説明 : {{i_snippet.explanation | linebreaksbr}}</p>
+        {% endif %}
+        <p>{{i_snippet.code | linebreaksbr}}</p>
     {% endfor %}
 
 </body>
