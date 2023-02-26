@@ -1,26 +1,33 @@
 from django.db import models
 from accounts.models import CustomUser
 
+
 class User(models.Model):
     username = models.CharField(max_length=100)
+
     def __str__(self):
         return f'<ID = {self.id}> {self.username}'
+
 
 # Create your models here.
 class Lang(models.Model):
     lang = models.CharField(max_length=100)
     ### 他のテーブルとの関連
     user = models.ForeignKey(CustomUser, on_delete=models.PROTECT)
+
     def __str__(self):
         return f'<ID = {self.id}> {self.user.username} --- {self.lang}'
+
 
 class Type(models.Model):
     type = models.CharField(max_length=100)
 
     ### 他のテーブルとの関連
     lang = models.ForeignKey(Lang, on_delete=models.PROTECT)
+
     def __str__(self):
         return f'<ID = {self.id}> {self.lang.lang} --- {self.type}'
+
 
 class Snippet(models.Model):
     title = models.CharField(max_length=100)
@@ -29,7 +36,8 @@ class Snippet(models.Model):
 
     ### 他のテーブルとの関連
     type = models.ForeignKey(Type, on_delete=models.PROTECT)
-    def __str__(self):
-        return f'<ID = {self.id}> {self.type.lang.lang} --- '\
-            f'{self.type.type} --- {self.title}'
 
+    def __str__(self):
+        return f'<ID = {self.id}> {self.type.lang.user.username} --- ' \
+               f'{self.type.lang.lang} --- ' \
+               f'{self.type.type} --- {self.title}'
