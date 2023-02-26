@@ -3,6 +3,11 @@
 {% block title %} List {% endblock %}
 
 {% block contents %}
+
+    {% if user.is_authenticated %}
+        <h1><a href="{% url 'snippet_app:index' %}"> snippet を作成する </h1>
+    {% endif %}
+
     <p>
         <a href="{% url 'snippet_app:list' %}?person={{person.id}}">{{person.username}} の snippet </a>
     </p>
