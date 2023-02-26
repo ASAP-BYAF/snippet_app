@@ -5,6 +5,9 @@
     <title>List</title>
 </head>
 <body>
+    {% for i_user in user_list %}
+        <p><a href="{% url 'snippet_app:list' %}?user={{i_user.id}}">{{i_user.id}}</a></p>
+    {% endfor %}
     {% for i_lang in lang_list %}
         <p><a href="{% url 'snippet_app:list' %}?lang={{i_lang.id}}">{{i_lang.lang}}</a></p>
     {% endfor %}
