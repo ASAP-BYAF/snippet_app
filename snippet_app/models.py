@@ -1,5 +1,5 @@
 from django.db import models
-
+from accounts.models import CustomUser
 
 class User(models.Model):
     username = models.CharField(max_length=100)
@@ -10,7 +10,7 @@ class User(models.Model):
 class Lang(models.Model):
     lang = models.CharField(max_length=100)
     ### 他のテーブルとの関連
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT)
     def __str__(self):
         return f'<ID = {self.id}> {self.user.username} --- {self.lang}'
 
