@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView
-from .models import Lang, Type, Snippet
+from .models import Lang, Snippet
 from accounts.models import CustomUser
 
 
@@ -54,7 +54,7 @@ class SnippetListView(ListView):
     def get_lang(self):
         user = self.get_user()
         try:
-            return Lang.objects.get(id=self.request.GET.get('lang', \
+            return Lang.objects.get(id=self.request.GET.get('lang',
                                                             user.lang_set.first().id))
         # lang が一つも登録されていないとき
         except AttributeError:
@@ -63,7 +63,7 @@ class SnippetListView(ListView):
     def get_type(self):
         lang = self.get_lang()
         try:
-            return lang.type_set.get(id=self.request.GET.get('type', \
+            return lang.type_set.get(id=self.request.GET.get('type',
                                                              lang.type_set.first().id))
         # type が一つも登録されていないとき
         except AttributeError:
