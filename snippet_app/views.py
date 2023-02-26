@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, CreateView
 from .models import Lang, Snippet
+from .forms import SnippetForm
 from accounts.models import CustomUser
 
 
@@ -11,7 +12,9 @@ class IndexView(TemplateView):
     def get(self, request):
         return render(request, 'snippet_app/index.html')
 
-
+class SnippetCreateView(CreateView):
+    model = Snippet
+    form_class = SnippetForm
 class SnippetListView(ListView):
     model = Snippet
 
