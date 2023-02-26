@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>List</title>
-</head>
-<body>
+{% extends 'snippet_app/base.html' %}
+
+{% block title %} List {% endblock %}
+
+{% block contents %}
     {% for i_user in user_list %}
         <p>
             <a href="{% url 'snippet_app:list' %}?user={{i_user.id}}">{{i_user.username}}</a>
@@ -28,5 +26,8 @@
         <p>{{i_snippet.code | linebreaksbr}}</p>
     {% endfor %}
 
-</body>
-</html>
+{% endblock %}
+
+
+
+
