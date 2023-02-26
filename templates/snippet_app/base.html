@@ -30,9 +30,9 @@
           </p>
 
         {% if user.is_authenticated %}
-            <p>log out</p>
+            <p><a href="{%url 'account_logout'%}">log out</a></p>
         {% else %}
-            <p>log in</p>
+            <p><a href="{%url 'account_login'%}">log in</a></p>
         {% endif %}
 
     </header>
