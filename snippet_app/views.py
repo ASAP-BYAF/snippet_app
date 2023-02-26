@@ -28,8 +28,7 @@ class SnippetListView(ListView):
 
     def get_queryset(self):
         lang = self.get_lang()
-        type = lang.type_set.get(id=self.request.GET.get('type', \
-                                                         lang.type_set.first().id))
+        type = self.get_type()
         self.queryset = type.snippet_set.all()
         return super().get_queryset()
 
@@ -38,5 +37,13 @@ class SnippetListView(ListView):
 
     def get_lang(self):
         user = self.get_user()
-        return Lang.objects.get(id=self.request.GET.get('lang', \
-                                                        user.lang_set.first().id))
+        try:
+            return Lang.objects.get(id=self.request.GET.get('lang', \
+                                                            user.lang_set.first().id))
+        except AttributeError:
+            return None
+
+    def get_type(self):
+        lang = self.get_lang()
+        return lang.type_set.get(id=self.request.GET.get('type', \
+                                                         lang.type_set.first().id))
