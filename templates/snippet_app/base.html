@@ -34,10 +34,20 @@
           {% endfor %}
       </details>
 
-
-          <p> my_snippet
-              {% if user.is_authenticated %}({{user.username}}){% endif %}
-          </p>
+        {% if user.is_authenticated %}
+            <p>
+                <a href="{% url 'snippet_app:list' %}?person={{user.id}}">
+                    my_snippet
+                    ({{user.username}})
+                </a>
+            </p>
+        {% else %}
+            <p>
+                <a href="{%url 'account_login'%}">
+                    my_snippet
+                </a>
+            </p>
+        {% endif %}
 
         {% if user.is_authenticated %}
             <p><a href="{%url 'account_logout'%}">log out</a></p>
