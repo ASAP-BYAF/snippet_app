@@ -3,19 +3,19 @@
 {% block title %} List {% endblock %}
 
 {% block contents %}
-    {% for i_user in user_list %}
+    {% for i_person in person_list %}
         <p>
-            <a href="{% url 'snippet_app:list' %}?user={{i_user.id}}">{{i_user.username}}</a>
+            <a href="{% url 'snippet_app:list' %}?person={{i_person.id}}">{{i_person.username}}</a>
         </p>
     {% endfor %}
     {% for i_lang in lang_list %}
         <p>
-            <a href="{% url 'snippet_app:list' %}?user={{user.id}}&lang={{i_lang.id}}">{{i_lang.lang}}</a>
+            <a href="{% url 'snippet_app:list' %}?person={{person.id}}&lang={{i_lang.id}}">{{i_lang.lang}}</a>
         </p>
     {% endfor %}
     {% for i_type in type_list %}
         <p>
-            <a href="{% url 'snippet_app:list' %}?user={{user.id}}&lang={{lang.id}}&type={{i_type.id}}">{{i_type.type}}</a>
+            <a href="{% url 'snippet_app:list' %}?person={{person.id}}&lang={{lang.id}}&type={{i_type.id}}">{{i_type.type}}</a>
         </p>
     {% endfor %}
     {% for i_snippet in object_list %}

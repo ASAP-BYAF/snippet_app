@@ -16,16 +16,16 @@ class SnippetListView(ListView):
     model = Snippet
 
     def get_context_data(self, **kwargs):
-        user = self.get_user()
+        person = self.get_person()
         lang = self.get_lang()
         if lang is not None:
             type_list = lang.type_set.all()
         else:
             type_list = None
         my_dict = {
-            'user_list': CustomUser.objects.all(),
-            'user': user,
-            'lang_list': user.lang_set.all(),
+            'person_list': CustomUser.objects.all(),
+            'person': person,
+            'lang_list': person.lang_set.all(),
             'lang': lang,
             'type_list': type_list,
         }
@@ -47,15 +47,15 @@ class SnippetListView(ListView):
         if self.queryset is None:
             self.template_name = 'snippet_app/index.html'
         return super().get_template_names()
-    def get_user(self):
+    def get_person(self):
         # 指定されてユーザーを取得。デフォルトは開発者。
-        return CustomUser.objects.get(id=self.request.GET.get('user', 1))
+        return CustomUser.objects.get(id=self.request.GET.get('person', 1))
 
     def get_lang(self):
-        user = self.get_user()
+        person = self.get_person()
         try:
             return Lang.objects.get(id=self.request.GET.get('lang',
-                                                            user.lang_set.first().id))
+                                                            person.lang_set.first().id))
         # lang が一つも登録されていないとき
         except AttributeError:
             return None
