@@ -24,6 +24,7 @@ class SnippetListView(ListView):
             type_list = None
         my_dict = {
             'user_list': CustomUser.objects.all(),
+            'user': user,
             'lang_list': user.lang_set.all(),
             'lang': lang,
             'type_list': type_list,

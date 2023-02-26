@@ -6,13 +6,19 @@
 </head>
 <body>
     {% for i_user in user_list %}
-        <p><a href="{% url 'snippet_app:list' %}?user={{i_user.id}}">{{i_user.id}}</a></p>
+        <p>
+            <a href="{% url 'snippet_app:list' %}?user={{i_user.id}}">{{i_user.username}}</a>
+        </p>
     {% endfor %}
     {% for i_lang in lang_list %}
-        <p><a href="{% url 'snippet_app:list' %}?lang={{i_lang.id}}">{{i_lang.lang}}</a></p>
+        <p>
+            <a href="{% url 'snippet_app:list' %}?user={{user.id}}&lang={{i_lang.id}}">{{i_lang.lang}}</a>
+        </p>
     {% endfor %}
     {% for i_type in type_list %}
-        <p><a href="{% url 'snippet_app:list' %}?lang={{lang.id}}&type={{i_type.id}}">{{i_type.type}}</a></p>
+        <p>
+            <a href="{% url 'snippet_app:list' %}?user={{user.id}}&lang={{lang.id}}&type={{i_type.id}}">{{i_type.type}}</a>
+        </p>
     {% endfor %}
     {% for i_snippet in object_list %}
         <p>{{i_snippet.title}}</p>
