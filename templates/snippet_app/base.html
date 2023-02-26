@@ -9,6 +9,33 @@
 </head>
 
   <body>
+    <header>
+      <p>
+          <a href="{% url 'snippet_app:list' %}?person={{1}}">Top</a>
+      </p>
+
+
+      <details>
+          <summary> 皆の snippet </summary>
+          {% for i_person in person_list %}
+              <p>
+                  <a href="{% url 'snippet_app:list' %}?person={{i_person.id}}">{{i_person.username}}</a>
+              </p>
+          {% endfor %}
+      </details>
+
+
+          <p> my_snippet
+              {% if user.is_authenticated %}({{user.username}}){% endif %}
+          </p>
+
+        {% if user.is_authenticated %}
+            <p>log out</p>
+        {% else %}
+            <p>log in</p>
+        {% endif %}
+
+    </header>
 
         {% block header%}{% endblock %}
 
