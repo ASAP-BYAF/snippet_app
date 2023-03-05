@@ -1,13 +1,26 @@
-alert('hello world');
+const createForm = document.getElementById('snippet-create');
+const langList = createForm.lang
+const typeList = createForm.type
+const newLangField = document.getElementById('id_lang_new');
+const newTypeField = document.getElementById('id_type_new');
+createForm.addEventListener('change', handleChange);
 
-//const langList = document.getElementById('id_lang');
-const langList = document.getElementById('snippet-create');
-langList.addEventListener('change', handleChange);
+console.log(langList);
 
 function handleChange() {
-    const langVal = langList.lang.value;
-    console.log(langList);
-    console.log(langList.lang);
-    console.log(langVal);
-    console.log('test');
+        for (let i=0; i<langList.length; i++) {
+            const i_opt = langList[i];
+            if (i_opt.value == 0) {
+                displayField(i_opt.checked, newLangField);
+                displayField(i_opt.checked, newTypeField);
+            }
+        }
+}
+
+function displayField(ifDisplay, target){
+  if(ifDisplay){
+      target.style.display= "block";
+  } else {
+      target.style.display= "None";
+  }
 }
