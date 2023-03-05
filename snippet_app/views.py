@@ -3,7 +3,7 @@ from django.views.generic import TemplateView, ListView, CreateView
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 
-from .models import Lang, Snippet
+from .models import Lang, Type, Snippet
 from .forms import SnippetForm
 from accounts.models import CustomUser
 
@@ -30,7 +30,11 @@ class SnippetCreateView(CreateView):
         return kwargs
     def form_valid(self, form):
         """If the form is valid, save the associated model."""
-        self.object = form.save(commit=False)
+        snippet = form.save(commit=False)
+        snippet.type = Type.objects.get(id = 1)
+        print(snippet)
+        self.object = snippet
+        # print(self.request.user.id)
         return HttpResponseRedirect(self.get_success_url())
 class SnippetListView(ListView):
     model = Snippet
