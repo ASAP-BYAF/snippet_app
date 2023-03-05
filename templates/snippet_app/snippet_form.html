@@ -7,17 +7,11 @@
 <form id='snippet-create', method="post">
     {% csrf_token %}
     {% for field in form %}
-    <div id = {{field.auto_id}}>
-        {{ field.label_tag}}
-        {% if field.field.widget.input_type == 'radio' %}
-            {% for item in field %}
-                <label for='{{ item.id_for_label }}'>{{ item.choice_label }}{{ item.tag }}</label>
-            {% endfor %}
-        {% else %}
-            {{ field }}
-        {% endif %}
+    <div>
+        <p>{{ field.label_tag}}</p>
+        {{ field }}
     </div>
-    {% endfor %}
+        {% endfor %}
     <input type="submit" value="click">
 </form>
 
