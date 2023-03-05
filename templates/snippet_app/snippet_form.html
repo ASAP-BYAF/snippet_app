@@ -2,7 +2,7 @@
 
 {% block contents %}
 
-<form action="{% url 'snippet_app:list' %}?person={{person.id}}" method="post">
+<form method="post">
     {% csrf_token %}
     {% for field in form %}
         <p>{{ field }}</p>
