@@ -17,8 +17,10 @@ class SnippetForm(forms.ModelForm):
 
         lang_queryset = Lang.objects.filter(user__id=person)
         lang_list = [(i_lang.id, i_lang.lang) for i_lang in lang_queryset]
+        lang_list.append(('0', '新しい言語を作成'))
         type_list = [(f'{i_lang.id}.{i_type.id}', i_type.type) for i_lang in lang_queryset
             for i_type in i_lang.type_set.all()]
+        type_list.append(('0', '新しい分類を作成'))
         self.fields['lang'] = forms.ChoiceField(
             choices=lang_list,
             widget = forms.RadioSelect,
