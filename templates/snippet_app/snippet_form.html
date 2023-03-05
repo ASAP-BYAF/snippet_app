@@ -1,13 +1,21 @@
+{% extends 'snippet_app/base.html' %}
+
 {% block title %} Create {% endblock %}
 
 {% block contents %}
 
-<form method="post">
+<form id='snippet-create', method="post">
     {% csrf_token %}
     {% for field in form %}
-    <div>
-        <p>{{ field.label_tag}}</p>
+    <div id = {{field.auto_id}}>
+        {{ field.label_tag}}
+        {% if field.field.widget.input_type == 'radio' %}
+            {% for item in field %}
+                <label for='{{ item.id_for_label }}'>{{ item.choice_label }}{{ item.tag }}</label>
+            {% endfor %}
+        {% else %}
             {{ field }}
+        {% endif %}
     </div>
     {% endfor %}
     <input type="submit" value="click">
