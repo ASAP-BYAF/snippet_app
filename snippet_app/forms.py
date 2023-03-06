@@ -1,6 +1,6 @@
 from django import forms
 from .models import Snippet, Lang, Type
-
+from collections import OrderedDict
 
 class SnippetForm(forms.ModelForm):
 
@@ -31,3 +31,6 @@ class SnippetForm(forms.ModelForm):
             widget = forms.RadioSelect,
             label = '分類'
         )
+
+        fields_keyOrder = ['lang', 'type', 'title', 'code', 'explanation',]
+        self.fields = OrderedDict((k, self.fields[k]) for k in fields_keyOrder)
