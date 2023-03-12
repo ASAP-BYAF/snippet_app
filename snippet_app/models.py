@@ -26,7 +26,8 @@ class Type(models.Model):
     lang = models.ForeignKey(Lang, on_delete=models.PROTECT)
 
     def __str__(self):
-        return f'<ID = {self.id}> {self.lang.lang} --- {self.type}'
+        return f'<ID = {self.id}> {self.lang.user.username} --- ' \
+                f'{self.lang.lang} --- {self.type}'
 
 
 class Snippet(models.Model):
