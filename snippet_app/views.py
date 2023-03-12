@@ -36,7 +36,11 @@ class SnippetCreateView(LoginRequiredMixin, CreateView):
         snippet = form.save(commit=False)
         type_id = self.request.POST['type'].split('.')[1]
         snippet.type = Type.objects.get(id = type_id)
+        snippet.type = Type.objects.get(id = self.request.POST['lang'])
         print(snippet)
+        print(snippet.code)
+        print(snippet.explanation)
+        snippet.save()
         self.object = snippet
         return HttpResponseRedirect(self.get_success_url())
 class SnippetListView(ListView):
