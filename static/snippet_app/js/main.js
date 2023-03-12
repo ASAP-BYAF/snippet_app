@@ -15,7 +15,7 @@ function handleChange() {
                 displayField(i_opt.checked, newTypeField);
             }
             if (i_opt.checked) {
-                for (let j_type=0; j_type<typeList.length; j_type++) {
+                for (let j_type=0; j_type<typeList.length-1; j_type++) {
                     const j_opt = typeList[j_type];
                     console.log(j_opt.value);
                     console.log(j_opt.value.split('.')[0]);
