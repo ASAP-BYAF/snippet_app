@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, CreateView
 from django.urls import reverse_lazy
@@ -16,10 +17,12 @@ class IndexView(TemplateView):
         return render(request, 'snippet_app/index.html')
 
 
-class SnippetCreateView(CreateView):
+class SnippetCreateView(LoginRequiredMixin, CreateView):
     model = Snippet
     form_class = SnippetForm
     success_url = reverse_lazy('snippet_app:list')
+    login_url = '/accounts/login/'
+    redirect_field_name = 'redirect_to'
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs.update(
