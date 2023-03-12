@@ -34,3 +34,19 @@ class SnippetForm(forms.ModelForm):
 
         fields_keyOrder = ['lang', 'type', 'title', 'code', 'explanation',]
         self.fields = OrderedDict((k, self.fields[k]) for k in fields_keyOrder)
+
+
+    def clean(self):
+        if self.cleaned_data['lang'] == '0':
+            new_lang = self.data['id_lang_new']
+            if not new_lang.replace(' ', '').replace('　', ''):
+                raise forms.ValidationError('新しい言語が入力されていません。')
+            if Lang.objects.filter(lang__iexact = new_lang):
+                raise forms.ValidationError('既に登録されている言語です。')
+
+        if self.cleaned_data['type'] == '0':
+            new_type = self.data['id_type_new']
+            if not new_type.replace(' ', '').replace('　', ''):
+                raise forms.ValidationError('新しい分類が入力されていません。')
+            if Type.objects.filter(type__iexact = new_type):
+                raise forms.ValidationError('既に登録されている分類です。')
