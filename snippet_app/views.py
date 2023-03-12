@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
+from django.contrib import messages
 from django.views.generic import TemplateView, ListView, CreateView
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 
@@ -50,6 +51,7 @@ class SnippetCreateView(LoginRequiredMixin, CreateView):
             snippet.type = save_new_type(self.request.POST['id_type_new'], snippet.lang)
 
         snippet.save()
+        messages.add_message(self.request, messages.SUCCESS, '新しいスニペットを作成しました。')
         self.object = snippet
         return HttpResponseRedirect(self.get_success_url())
 class SnippetListView(ListView):
