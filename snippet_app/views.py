@@ -31,7 +31,8 @@ class SnippetCreateView(CreateView):
     def form_valid(self, form):
         """If the form is valid, save the associated model."""
         snippet = form.save(commit=False)
-        snippet.type = Type.objects.get(id = self.request.POST['type'])
+        type_id = self.request.POST['type'].split('.')[1]
+        snippet.type = Type.objects.get(id = type_id)
         print(snippet)
         self.object = snippet
         return HttpResponseRedirect(self.get_success_url())
