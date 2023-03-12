@@ -16,7 +16,6 @@ class IndexView(TemplateView):
     def get(self, request):
         return render(request, 'snippet_app/index.html')
 
-
 class SnippetCreateView(LoginRequiredMixin, CreateView):
     model = Snippet
     form_class = SnippetForm
@@ -34,12 +33,22 @@ class SnippetCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         """If the form is valid, save the associated model."""
         snippet = form.save(commit=False)
-        type_id = self.request.POST['type'].split('.')[1]
-        snippet.type = Type.objects.get(id = type_id)
-        snippet.type = Type.objects.get(id = self.request.POST['lang'])
-        print(snippet)
-        print(snippet.code)
-        print(snippet.explanation)
+
+        # 既存の言語でスニペットを作成
+        if (lang_id := self.request.POST['lang']) != '0':
+            snippet.lang = Lang.objects.get(id=lang_id)
+            # 既存の言語でスニペットを作成
+            if (type_id := self.request.POST['type'].split('.')[-1]) != '0':
+                snippet.type = Type.objects.get(id=type_id)
+            # 新しい分類でスニペットを作成
+            else:
+                snippet.type = save_new_type(self.request.POST['id_type_new'], snippet.lang)
+        # 新しい言語でスニペットを作成
+        else:
+            user = self.request.user
+            snippet.lang = save_new_lang(user, self.request.POST['id_lang_new'])
+            snippet.type = save_new_type(self.request.POST['id_type_new'], snippet.lang)
+
         snippet.save()
         self.object = snippet
         return HttpResponseRedirect(self.get_success_url())
@@ -100,3 +109,17 @@ class SnippetListView(ListView):
         # type が一つも登録されていないとき
         except AttributeError:
             return None
+
+def save_new_type(type, lang):
+    new_type = Type()
+    new_type.type = type
+    new_type.lang = lang
+    new_type.save()
+    return new_type
+
+def save_new_lang(user, lang):
+    new_lang = Lang()
+    new_lang.lang = lang
+    new_lang.user = user
+    new_lang.save()
+    return new_lang
