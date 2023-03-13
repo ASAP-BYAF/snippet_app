@@ -21,12 +21,15 @@ function handleChange() {
         }
         if (i_opt.value == 0) {
             displayField(i_opt.checked, newLangField);
+            addRequired(i_opt.checked, newLangField.lastElementChild);
             if (i_opt.checked) {
                 typeList[typeList.length-1].checked = true;
             }
         }
-        displayField(typeList[typeList.length-1].checked, newTypeField)
     }
+    displayField(typeList[typeList.length-1].checked, newTypeField)
+    addRequired(typeList[typeList.length-1].checked, newTypeField.lastElementChild)
+}
 }
 
 function displayField(ifDisplay, target){
@@ -34,5 +37,15 @@ function displayField(ifDisplay, target){
       target.style.display= "block";
   } else {
       target.style.display= "None";
+  }
+}
+
+function addRequired(ifRequired, target){
+  if(ifRequired){
+      target.setAttribute('required', 'ture');
+      console.log(target);
+  } else {
+      target.setAttribute('required', 'false');
+      console.log(target);
   }
 }
