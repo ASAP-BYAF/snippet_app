@@ -43,12 +43,12 @@ class SnippetCreateView(LoginRequiredMixin, CreateView):
                 snippet.type = Type.objects.get(id=type_id)
             # 新しい分類でスニペットを作成
             else:
-                snippet.type = save_new_type(self.request.POST['id_type_new'], snippet.lang)
+                snippet.type = save_new_type(self.request.POST['new_type'], snippet.lang)
         # 新しい言語でスニペットを作成
         else:
             user = self.request.user
-            snippet.lang = save_new_lang(user, self.request.POST['id_lang_new'])
-            snippet.type = save_new_type(self.request.POST['id_type_new'], snippet.lang)
+            snippet.lang = save_new_lang(user, self.request.POST['new_lang'])
+            snippet.type = save_new_type(self.request.POST['new_type'], snippet.lang)
 
         snippet.save()
         messages.add_message(self.request, messages.SUCCESS, '新しいスニペットを作成しました。')
