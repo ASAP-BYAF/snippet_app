@@ -26,13 +26,22 @@ class SnippetForm(forms.ModelForm):
             widget = forms.RadioSelect,
             label = '言語'
         )
+        self.fields['new_lang'] = forms.CharField(
+            label='新しい言語を入力',
+            required=False
+        )
         self.fields['type'] = forms.ChoiceField(
             choices = type_list,
             widget = forms.RadioSelect,
             label = '分類'
         )
+        self.fields['new_type'] = forms.CharField(
+            label='新しい分類を入力',
+            required=False
+        )
 
-        fields_keyOrder = ['lang', 'type', 'title', 'code', 'explanation',]
+        fields_keyOrder = ['lang', 'new_lang', 'type', 'new_type', \
+            'title', 'code', 'explanation', ]
         self.fields = OrderedDict((k, self.fields[k]) for k in fields_keyOrder)
 
 

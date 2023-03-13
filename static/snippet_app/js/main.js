@@ -1,8 +1,8 @@
 const createForm = document.getElementById('snippet-create');
 const langList = createForm.lang
 const typeList = createForm.type
-const newLangField = document.getElementById('id_lang_new');
-const newTypeField = document.getElementById('id_type_new');
+const newLangField = document.getElementById('id_new_lang');
+const newTypeField = document.getElementById('id_new_type');
 createForm.addEventListener('change', handleChange);
 
 function handleChange() {
