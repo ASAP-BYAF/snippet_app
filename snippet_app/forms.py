@@ -44,7 +44,6 @@ class SnippetForm(forms.ModelForm):
             'title', 'code', 'explanation', ]
         self.fields = OrderedDict((k, self.fields[k]) for k in fields_keyOrder)
 
-
     def clean_title(self):
         new_title = self.data['title']
         if Snippet.objects.filter(title__iexact = new_title):
