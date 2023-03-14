@@ -13,7 +13,7 @@ class User(models.Model):
 class Lang(models.Model):
     lang = models.CharField(max_length=100)
     ### 他のテーブルとの関連
-    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'<ID = {self.id}> {self.user.username} --- {self.lang}'
@@ -23,7 +23,7 @@ class Type(models.Model):
     type = models.CharField(max_length=100)
 
     ### 他のテーブルとの関連
-    lang = models.ForeignKey(Lang, on_delete=models.PROTECT)
+    lang = models.ForeignKey(Lang, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'<ID = {self.id}> {self.lang.user.username} --- ' \
@@ -36,7 +36,7 @@ class Snippet(models.Model):
     code = models.TextField()
 
     ### 他のテーブルとの関連
-    type = models.ForeignKey(Type, on_delete=models.PROTECT)
+    type = models.ForeignKey(Type, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'<ID = {self.id}> {self.type.lang.user.username} --- ' \
