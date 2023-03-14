@@ -64,14 +64,14 @@ class SnippetListView(ListView):
             type_list = lang.type_set.all()
         else:
             type_list = None
-        my_dict = {
+        kwargs.update({
             'person_list': CustomUser.objects.all(),
             'person': person,
             'lang_list': person.lang_set.all(),
             'lang': lang,
             'type_list': type_list,
-        }
-        return super().get_context_data(**my_dict)
+        })
+        return super().get_context_data(**kwargs)
 
     def get_queryset(self):
         type = self.get_type()
