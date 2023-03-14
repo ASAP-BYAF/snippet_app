@@ -17,12 +17,14 @@ class IndexView(TemplateView):
     def get(self, request):
         return render(request, 'snippet_app/index.html')
 
+
 class SnippetCreateView(LoginRequiredMixin, CreateView):
     model = Snippet
     form_class = SnippetForm
     success_url = reverse_lazy('snippet_app:list')
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
+
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs.update(
