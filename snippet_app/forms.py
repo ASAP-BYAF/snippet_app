@@ -45,6 +45,11 @@ class SnippetForm(forms.ModelForm):
         self.fields = OrderedDict((k, self.fields[k]) for k in fields_keyOrder)
 
 
+    def clean_title(self):
+        new_title = self.data['title']
+        if Snippet.objects.filter(title__iexact = new_title):
+            raise forms.ValidationError('既に登録されているタイトルです。')
+
     def clean(self):
         if self.cleaned_data['lang'] == '0':
             new_lang = self.data['new_lang']
