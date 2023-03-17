@@ -1,6 +1,7 @@
 from django import forms
 from .models import Snippet, Lang, Type
 from collections import OrderedDict
+from accounts.models import CustomUser
 
 class SnippetForm(forms.ModelForm):
 
@@ -44,22 +45,23 @@ class SnippetForm(forms.ModelForm):
             'title', 'code', 'explanation', ]
         self.fields = OrderedDict((k, self.fields[k]) for k in fields_keyOrder)
 
-    def clean_title(self):
-        new_title = self.data['title']
-        if Snippet.objects.filter(title__iexact = new_title):
-            raise forms.ValidationError('既に登録されているタイトルです。')
+        # 各フォームに対して user_id の情報を持たせる
+        self.user = CustomUser.objects.get(id = person)
 
     def clean(self):
         if self.cleaned_data['lang'] == '0':
-            new_lang = self.data['new_lang']
-            if not new_lang.replace(' ', '').replace('　', ''):
+            lang = self.cleaned_data['new_lang']
+            if not lang.replace(' ', '').replace('　', ''):
                 raise forms.ValidationError('新しい言語が入力されていません。')
-            if Lang.objects.filter(lang__iexact = new_lang):
+            if Lang.objects.filter(user = self.user, lang__iexact = lang):
                 raise forms.ValidationError('既に登録されている言語です。')
 
+        else:
+            lang = Lang.objects.get(id = self.cleaned_data['lang']).lang
+
         if self.cleaned_data['type'] == '0':
-            new_type = self.data['new_type']
+            new_type = self.cleaned_data['new_type']
             if not new_type.replace(' ', '').replace('　', ''):
                 raise forms.ValidationError('新しい分類が入力されていません。')
-            if Type.objects.filter(type__iexact = new_type):
+            if Type.objects.filter(lang__lang__iexact = lang, type__iexact = new_type):
                 raise forms.ValidationError('既に登録されている分類です。')
