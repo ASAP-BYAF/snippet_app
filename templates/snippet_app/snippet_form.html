@@ -18,12 +18,6 @@
             {{ field }}
         {% endif %}
     </div>
-    {% endfor %}
-    <input type="submit" value="click">
-</form>
-<div>
-    {% for field in form %}
-
     <div>
     {% comment %} 各フィールドのエラー {% endcomment %}
         {% if field.errors %}
@@ -32,6 +26,12 @@
             {% endfor %}
         {% endif %}
     </div>
+    {% endfor %}
+    <input type="submit" value="click">
+</form>
+<div>
+    {% for field in form %}
+
     {% endfor %}
     {% for non_field_error in form.non_field_errors %}
     <div>
