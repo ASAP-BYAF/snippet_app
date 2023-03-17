@@ -8,10 +8,10 @@ createForm.addEventListener('change', handleChange);
 window.addEventListener("load", handleNewField);
 
 function handleNewField() {
-    displayField(langList[langList.length-1].checked, newLangField)
-    addRequired(langList[langList.length-1].checked, newLangField.lastElementChild)
-    displayField(typeList[typeList.length-1].checked, newTypeField)
-    addRequired(typeList[typeList.length-1].checked, newTypeField.lastElementChild)
+    displayField(langList[langList.length-1].checked, newLangField);
+    addRequired(langList[langList.length-1].checked, newLangField.lastElementChild);
+    displayField(typeList[typeList.length-1].checked, newTypeField);
+    addRequired(typeList[typeList.length-1].checked, newTypeField.lastElementChild);
 }
 
 function handleChange() {
@@ -39,7 +39,6 @@ function handleChange() {
     displayField(typeList[typeList.length-1].checked, newTypeField)
     addRequired(typeList[typeList.length-1].checked, newTypeField.lastElementChild)
 }
-}
 
 function displayField(ifDisplay, target){
   if(ifDisplay){
@@ -52,9 +51,7 @@ function displayField(ifDisplay, target){
 function addRequired(ifRequired, target){
   if(ifRequired){
       target.setAttribute('required', 'ture');
-      console.log(target);
   } else {
       target.setAttribute('required', 'false');
-      console.log(target);
   }
 }
