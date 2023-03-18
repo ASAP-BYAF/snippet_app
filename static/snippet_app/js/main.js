@@ -8,10 +8,10 @@ createForm.addEventListener('change', handleChange);
 window.addEventListener("load", handleNewField);
 
 function handleNewField() {
-    displayField(langList[langList.length-1].checked, newLangField);
-    addRequired(langList[langList.length-1].checked, newLangField.lastElementChild);
-    displayField(typeList[typeList.length-1].checked, newTypeField);
-    addRequired(typeList[typeList.length-1].checked, newTypeField.lastElementChild);
+    handleDisplay(langList[langList.length-1].checked, newLangField);
+    handleRequired(langList[langList.length-1].checked, newLangField.lastElementChild);
+    handleDisplay(typeList[typeList.length-1].checked, newTypeField);
+    handleRequired(typeList[typeList.length-1].checked, newTypeField.lastElementChild);
 }
 
 function handleChange() {
@@ -21,26 +21,26 @@ function handleChange() {
             for (let j_type=0; j_type<typeList.length-1; j_type++) {
                 const j_opt = typeList[j_type];
                 if (i_opt.value == j_opt.value.split('.')[0]){
-                    displayField(true, j_opt.parentElement);
+                    handleDisplay(true, j_opt.parentElement);
                 } else {
-                    displayField(false, j_opt.parentElement);
+                    handleDisplay(false, j_opt.parentElement);
                     j_opt.checked = false;
                 }
             }
         }
         if (i_opt.value == 0) {
-            displayField(i_opt.checked, newLangField);
-            addRequired(i_opt.checked, newLangField.lastElementChild);
+            handleDisplay(i_opt.checked, newLangField);
+            handleRequired(i_opt.checked, newLangField.lastElementChild);
             if (i_opt.checked) {
                 typeList[typeList.length-1].checked = true;
             }
         }
     }
-    displayField(typeList[typeList.length-1].checked, newTypeField)
-    addRequired(typeList[typeList.length-1].checked, newTypeField.lastElementChild)
+    handleDisplay(typeList[typeList.length-1].checked, newTypeField)
+    handleRequired(typeList[typeList.length-1].checked, newTypeField.lastElementChild)
 }
 
-function displayField(ifDisplay, target){
+function handleDisplay(ifDisplay, target){
   if(ifDisplay){
       target.style.display= "block";
   } else {
@@ -48,7 +48,7 @@ function displayField(ifDisplay, target){
   }
 }
 
-function addRequired(ifRequired, target){
+function handleRequired(ifRequired, target){
   if(ifRequired){
       target.required=true;
   } else {
