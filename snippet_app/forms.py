@@ -16,36 +16,52 @@ class SnippetForm(forms.ModelForm):
     def __init__(self, person, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        # 初期値の設定
+        # update
+        if self.instance.id:
+            initial_lang = self.instance.type.lang.id
+            initial_type = self.instance.type.id
+            initial_type =f'{initial_lang}.{initial_type}'
+        # create
+        else:
+            initial_lang = 0
+            initial_type = 0
+
         lang_queryset = Lang.objects.filter(user__id=person)
         lang_list = [(i_lang.id, i_lang.lang) for i_lang in lang_queryset]
         lang_list.append(('0', '新しい言語を作成'))
-        type_list = [(f'{i_lang.id}.{i_type.id}', i_type.type) for i_lang in lang_queryset
-            for i_type in i_lang.type_set.all()]
-        type_list.append(('0', '新しい分類を作成'))
         self.fields['lang'] = forms.ChoiceField(
             choices=lang_list,
             widget = forms.RadioSelect,
-            label = '言語'
+            label = '言語',
+            initial=initial_lang
         )
         self.fields['new_lang'] = forms.CharField(
             label='新しい言語を入力',
             required=False
         )
+
+        type_list = [(f'{i_lang.id}.{i_type.id}', i_type.type) for i_lang in lang_queryset
+            for i_type in i_lang.type_set.all()]
+        type_list.append(('0', '新しい分類を作成'))
         self.fields['type'] = forms.ChoiceField(
             choices = type_list,
             widget = forms.RadioSelect,
-            label = '分類'
+            label = '分類',
+            initial=initial_type
         )
         self.fields['new_type'] = forms.CharField(
             label='新しい分類を入力',
             required=False
         )
 
+        # フィールドの並び順を設定
         fields_keyOrder = ['lang', 'new_lang', 'type', 'new_type', \
             'title', 'code', 'explanation', ]
         self.fields = OrderedDict((k, self.fields[k]) for k in fields_keyOrder)
 
         # 各フォームに対して user_id の情報を持たせる
+        # バリデーションの時にユーザーに関連する言語を検索するため
         self.user = CustomUser.objects.get(id = person)
 
     def clean(self):
