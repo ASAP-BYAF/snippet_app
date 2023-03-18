@@ -50,8 +50,8 @@ function displayField(ifDisplay, target){
 
 function addRequired(ifRequired, target){
   if(ifRequired){
-      target.setAttribute('required', 'ture');
+      target.required=true;
   } else {
-      target.setAttribute('required', 'false');
+      target.required=false;
   }
 }
