@@ -1,0 +1,44 @@
+{% extends 'snippet_app/base.html' %}
+
+{% block title %} Update {% endblock %}
+
+{% block contents %}
+
+<form id='snippet-create', method="post">
+    {% csrf_token %}
+    {% for field in form %}
+    <div id = {{field.auto_id}}>
+        <p>{{ field.label_tag}}</p>
+        {% if field.field.widget.input_type == 'radio' %}
+            {% for item in field %}
+                <p>{{ item.tag }}<label for='{{ item.id_for_label }}'>{{ item.choice_label }}</label></p>
+            {% endfor %}
+
+        {% else %}
+            {{ field }}
+        {% endif %}
+    </div>
+    {% endfor %}
+    <input type="submit" value="click">
+</form>
+<div>
+    {% for field in form %}
+
+    <div>
+    {% comment %} 各フィールドのエラー {% endcomment %}
+        {% if field.errors %}
+            {% for error in field.errors %}
+            <div>{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    {% endfor %}
+    {% for non_field_error in form.non_field_errors %}
+    <div>
+        {{non_field_error}}
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

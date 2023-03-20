@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.views.generic import TemplateView, ListView, CreateView
+from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
@@ -54,6 +55,47 @@ class SnippetCreateView(LoginRequiredMixin, CreateView):
 
         snippet.save()
         messages.add_message(self.request, messages.SUCCESS, '新しいスニペットを作成しました。')
+        self.object = snippet
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class SnippetUpdateView(LoginRequiredMixin, UpdateView):
+    model = Snippet
+    form_class = SnippetForm
+    success_url = reverse_lazy('snippet_app:list')
+    login_url = '/accounts/login/'
+    redirect_field_name = 'redirect_to'
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update(
+            {
+                'person': self.request.GET['person'],
+            }
+        )
+        return kwargs
+
+    def form_valid(self, form):
+        """If the form is valid, save the associated model."""
+        snippet = form.save(commit=False)
+
+        # 既存の言語でスニペットを作成
+        if (lang_id := self.request.POST['lang']) != '0':
+            snippet.lang = Lang.objects.get(id=lang_id)
+            # 既存の言語でスニペットを作成
+            if (type_id := self.request.POST['type'].split('.')[-1]) != '0':
+                snippet.type = Type.objects.get(id=type_id)
+            # 新しい分類でスニペットを作成
+            else:
+                snippet.type = save_new_type(self.request.POST['new_type'], snippet.lang)
+        # 新しい言語でスニペットを作成
+        else:
+            user = self.request.user
+            snippet.lang = save_new_lang(user, self.request.POST['new_lang'])
+            snippet.type = save_new_type(self.request.POST['new_type'], snippet.lang)
+
+        # snippet.save()
+        messages.add_message(self.request, messages.SUCCESS, 'スニペットを一部変更しました。')
         self.object = snippet
         return HttpResponseRedirect(self.get_success_url())
 class SnippetListView(ListView):

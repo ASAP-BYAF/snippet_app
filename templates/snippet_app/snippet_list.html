@@ -28,6 +28,11 @@
             <p>説明 : {{i_snippet.explanation | linebreaksbr}}</p>
         {% endif %}
         <p>{{i_snippet.code | linebreaksbr}}</p>
+        <p>
+            <a href="{% url 'snippet_app:update' pk=i_snippet.id %}?person={{person.id}}">編集する</a>
+        </p>
     {% endfor %}
 
+
 {% endblock %}
+
