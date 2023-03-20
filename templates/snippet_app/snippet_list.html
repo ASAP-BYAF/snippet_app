@@ -30,6 +30,7 @@
         <p>{{i_snippet.code | linebreaksbr}}</p>
         <p>
             <a href="{% url 'snippet_app:update' pk=i_snippet.id %}?person={{person.id}}">編集する</a>
+            <a href="{% url 'snippet_app:delete' pk=i_snippet.id %}?person={{person.id}}">削除する</a>
         </p>
     {% endfor %}
 

@@ -1,0 +1,26 @@
+{% extends 'snippet_app/base.html' %}
+
+{% block title %} Delete {% endblock %}
+
+{% block contents %}
+
+<div>
+    <p>{{snippet.type.lang.user.username}}</p>
+    <p>{{snippet.type.lang.lang}}</p>
+    <p>{{snippet.type.type}}</p>
+    <p>{{snippet.title}}</p>
+    {% if snippet.explanation is not None %}
+        <p>説明 : {{snippet.explanation | linebreaksbr}}</p>
+    {% endif %}
+    <p>{{snippet.code | linebreaksbr}}</p>
+</div>
+
+<form id='snippet-delete', method="post">
+        {% csrf_token %}
+        <p>本当に削除しますか？</p>
+        <input type="submit" value="削除">
+</form>
+<a href="{% url 'snippet_app:list' %}?person={{user.id}}">キャンセル</a>
+
+
+{% endblock %}
