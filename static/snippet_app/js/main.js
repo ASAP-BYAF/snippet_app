@@ -5,14 +5,7 @@ const newLangField = document.getElementById('id_new_lang');
 const newTypeField = document.getElementById('id_new_type');
 
 createForm.addEventListener('change', handleChange);
-window.addEventListener("load", handleNewField);
-
-function handleNewField() {
-    handleDisplay(langList[langList.length-1].checked, newLangField);
-    handleRequired(langList[langList.length-1].checked, newLangField.lastElementChild);
-    handleDisplay(typeList[typeList.length-1].checked, newTypeField);
-    handleRequired(typeList[typeList.length-1].checked, newTypeField.lastElementChild);
-}
+window.addEventListener("load", handleChange);
 
 function handleChange() {
     for (let i_lang=0; i_lang<langList.length; i_lang++) {
