@@ -5,3 +5,6 @@ __pycache__/
 config/settings/.env
 config/settings/settings_dev.py
 .idea/
+
+# tailwindcss の設定以外のファイル
+static/snippet_app/css/node_modules/
