@@ -11,6 +11,13 @@ from accounts.models import CustomUser
 
 
 # Create your views here.
+class GetCustomUserMixin:
+
+    def get_context_data(self, **kwargs):
+        kwargs.update({
+            'person_list': CustomUser.objects.all(),
+        })
+        return super().get_context_data(**kwargs)
 
 class IndexView(TemplateView):
 
@@ -18,7 +25,7 @@ class IndexView(TemplateView):
         return render(request, 'snippet_app/index.html')
 
 
-class SnippetCreateView(LoginRequiredMixin, CreateView):
+class SnippetCreateView(LoginRequiredMixin, GetCustomUserMixin, CreateView):
     model = Snippet
     form_class = SnippetForm
     success_url = reverse_lazy('snippet_app:list')
@@ -58,7 +65,7 @@ class SnippetCreateView(LoginRequiredMixin, CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class SnippetUpdateView(LoginRequiredMixin, UpdateView):
+class SnippetUpdateView(LoginRequiredMixin, GetCustomUserMixin, UpdateView):
     model = Snippet
     form_class = SnippetForm
     success_url = reverse_lazy('snippet_app:list')
@@ -99,7 +106,7 @@ class SnippetUpdateView(LoginRequiredMixin, UpdateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class SnippetDeleteView(LoginRequiredMixin, DeleteView):
+class SnippetDeleteView(LoginRequiredMixin, GetCustomUserMixin, DeleteView):
     model = Snippet
     success_url = reverse_lazy('snippet_app:list')
     login_url = '/accounts/login/'
@@ -115,7 +122,7 @@ class SnippetDeleteView(LoginRequiredMixin, DeleteView):
         return super().get_context_data(**kwargs)
 
 
-class SnippetListView(ListView):
+class SnippetListView(GetCustomUserMixin, ListView):
     model = Snippet
 
     def get_context_data(self, **kwargs):
@@ -126,7 +133,6 @@ class SnippetListView(ListView):
         else:
             type_list = None
         kwargs.update({
-            'person_list': CustomUser.objects.all(),
             'person': person,
             'lang': lang,
             'type': self.get_type(),
@@ -186,3 +192,5 @@ def save_new_lang(user, lang):
     new_lang.user = user
     new_lang.save()
     return new_lang
+
+
