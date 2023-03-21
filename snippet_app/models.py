@@ -34,6 +34,8 @@ class Snippet(models.Model):
     title = models.CharField(max_length=100)
     explanation = models.TextField(blank=True, null=True)
     code = models.TextField()
+    created_at = models.DateTimeField('作成日時', auto_now_add=True)
+    updated_at = models.DateTimeField('更新日時', auto_now=True)
 
     ### 他のテーブルとの関連
     type = models.ForeignKey(Type, on_delete=models.CASCADE)
