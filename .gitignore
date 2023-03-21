@@ -8,3 +8,4 @@ config/settings/settings_dev.py
 
 # tailwindcss の設定以外のファイル
 static/snippet_app/css/node_modules/
+static/snippet_app/css/dist/
