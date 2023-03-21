@@ -12,16 +12,8 @@
         <a href="{% url 'snippet_app:list' %}?person={{person.id}}">{{person.username}} の snippet </a>
     </p>
 
-    {% for i_lang in lang_list %}
-        <p>
-            <a href="{% url 'snippet_app:list' %}?person={{person.id}}&lang={{i_lang.id}}">{{i_lang.lang}}</a>
-        </p>
-    {% endfor %}
-    {% for i_type in type_list %}
-        <p>
-            <a href="{% url 'snippet_app:list' %}?person={{person.id}}&lang={{lang.id}}&type={{i_type.id}}">{{i_type.type}}</a>
-        </p>
-    {% endfor %}
+    <p>{{lang}}</p>
+    <p>{{type}}</p>
     {% for i_snippet in object_list %}
         <p>{{i_snippet.title}}</p>
         {% if i_snippet.explanation is not None %}
@@ -37,6 +29,27 @@
 
     {% endfor %}
 
+    {% for i_list in lang_type_snippet %}
+        <details>
+            <summary>{{i_list.0.lang}}</summary>
+            {% for j_list in i_list.1 %}
+            <details>
+<!--                <summary>{{j_list.0.type}}</summary>-->
+                <summary>
+                    <a href="{% url 'snippet_app:list' %}?person={{person.id}}&lang={{i_list.0.id}}&type={{j_list.0.id}}">{{j_list.0.type}}</a>
+                </summary>
+                {% for k_snippet in j_list.1 %}
+                <ul>
+                    <li>
+                        <a href="{% url 'snippet_app:list' %}?person={{person.id}}&lang={{i_list.0.id}}&type={{j_list.0.id}}">{{k_snippet.title}}</a>
+                    </li>
+                </ul>
+                {% endfor %}
+            </details>
+            {% endfor %}
+        </details>
+    {% endfor %}
 
+<p>{{ user.id }}</p>
 {% endblock %}
 

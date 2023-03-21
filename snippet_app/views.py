@@ -128,9 +128,9 @@ class SnippetListView(ListView):
         kwargs.update({
             'person_list': CustomUser.objects.all(),
             'person': person,
-            'lang_list': person.lang_set.all(),
             'lang': lang,
-            'type_list': type_list,
+            'type': self.get_type(),
+            'lang_type_snippet': [[i_lang, [[i_type, i_type.snippet_set.all()] for i_type in i_lang.type_set.all()]] for i_lang in person.lang_set.all()],
         })
         return super().get_context_data(**kwargs)
 
