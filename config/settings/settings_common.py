@@ -14,7 +14,8 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 # 環境変数を .env から読み込む。
-load_dotenv()
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+load_dotenv(dotenv_path)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -45,7 +46,8 @@ INSTALLED_APPS = [
     'accounts',
     'django.contrib.sites',
     'allauth',
-    'allauth.account'
+    'allauth.account',
+    'django_ses'
     ]
 
 MIDDLEWARE = [
@@ -171,5 +173,6 @@ ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_EMAIL_SUBJECT_PREFIX = ''
 
 # デフォルトのメール送信元を設定
-DEFAULT_FROM_EMAIL = 'admin@example.com'
+#DEFAULT_FROM_EMAIL = 'admin@example.com'
+DEFAULT_FROM_EMAIL = 'teppei0830.4869@gmail.com'
 
