@@ -15,8 +15,14 @@ class SnippetForm(forms.ModelForm):
             }
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-title'}),
-            'code': forms.Textarea(attrs={'class': 'form-code'}),
-            'explanation': forms.Textarea(attrs={'class': 'form-explanation'}),
+            'code': forms.Textarea(attrs={
+                'class': 'form-code',
+                'cols': 100,
+                'rows': 10}),
+            'explanation': forms.Textarea(attrs={
+                'class': 'form-code',
+                'cols': 100,
+                'rows': 10}),
         }
     def __init__(self, person, *args, **kwargs):
         super().__init__(*args, **kwargs)
