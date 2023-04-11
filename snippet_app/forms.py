@@ -13,6 +13,11 @@ class SnippetForm(forms.ModelForm):
             'code': 'コード',
             'explanation': '説明'
             }
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-title'}),
+            'code': forms.Textarea(attrs={'class': 'form-code'}),
+            'explanation': forms.Textarea(attrs={'class': 'form-explanation'}),
+        }
     def __init__(self, person, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
