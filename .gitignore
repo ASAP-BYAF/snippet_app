@@ -3,7 +3,6 @@ __pycache__/
 *.py[cod]
 *$py.class
 config/settings/.env
-config/settings/settings_dev.py
 .idea/
 
 # tailwindcss の設定以外のファイル
