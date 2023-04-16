@@ -98,3 +98,9 @@ class UsernameChangeForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ["username"]
+        labels={
+            'username': '新しいユーザー名',
+            }
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-title'}),
+        }
