@@ -39,8 +39,7 @@
         {% if user.is_authenticated %}
             <p>
                 <a href="{% url 'snippet_app:list' %}?person={{user.id}}">
-                    my_snippet
-                    ({{user.username}})
+                    "{{user.username}}" の snippet
                 </a>
             </p>
         {% else %}
