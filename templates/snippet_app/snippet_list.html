@@ -3,59 +3,74 @@
 {% block title %} List {% endblock %}
 
 {% block contents %}
-<div class="flex flex-row">
-    <nav class="w-[10%] border-r-2 mx-4">
-        
-        {% if user.id == person.id %}
-        <h1><a href="{% url 'snippet_app:create' %}"> snippet を作成 </a></h1>
-        {% endif %}
-        
-        {% for i_list in lang_type_snippet %}
-        <details>
-            <summary>
-                <a href="{% url 'snippet_app:list' %}?person={{person.id}}&lang={{i_list.0.id}}">{{i_list.0.lang}}</a>
-            </summary>
-            {% for j_list in i_list.1 %}
+<div>
+    <div class="min-h-[80%] flex flex-row">
+        <nav class="w-[10%] border-r-2 mx-4">
+
+            {% for i_list in lang_type_snippet %}
             <details>
-                <!--                <summary>{{j_list.0.type}}</summary>-->
-                    <summary>
-                        <a href="{% url 'snippet_app:list' %}?person={{person.id}}&lang={{i_list.0.id}}&type={{j_list.0.id}}">{{j_list.0.type}}</a>
-                    </summary>
-                    {% for k_snippet in j_list.1 %}
-                    <ul>
-                        <li>
-                            <a href="{% url 'snippet_app:list' %}?person={{person.id}}&lang={{i_list.0.id}}&type={{j_list.0.id}}">{{k_snippet.title}}</a>
-                        </li>
-                    </ul>
+                <summary>
+                    <a href="{% url 'snippet_app:list' %}?person={{person.id}}&lang={{i_list.0.id}}"
+                    class="text-3xl">
+                        {{i_list.0.lang}}
+                    </a>
+                </summary>
+                {% for j_list in i_list.1 %}
+                <details>
+                    <!--                <summary>{{j_list.0.type}}</summary>-->
+                        <summary>
+                            <a href="{% url 'snippet_app:list' %}?person={{person.id}}&lang={{i_list.0.id}}&type={{j_list.0.id}}"
+                            class="text-2xl text-[#9ec3bc]">
+                                {{j_list.0.type}}
+                            </a>
+                        </summary>
+                        {% for k_snippet in j_list.1 %}
+                        <ul>
+                            <li>
+                                <a href="{% url 'snippet_app:list' %}?person={{person.id}}&lang={{i_list.0.id}}&type={{j_list.0.id}}">{{k_snippet.title}}</a>
+                            </li>
+                        </ul>
+                        {% endfor %}
+                    </details>
                     {% endfor %}
                 </details>
                 {% endfor %}
-            </details>
-            {% endfor %}
-        </nav>
-        <main  class="w-[80%]">
-            
-            <p class="text-2xl">
-                <a href="{% url 'snippet_app:list' %}?person={{person.id}}">{{person.username}} の snippet </a>
-                >> <a href="{% url 'snippet_app:list' %}?person={{person.id}}&lang={{lang.id}}">{{lang.lang}}</a>
-                >> <a href="{% url 'snippet_app:list' %}?person={{person.id}}&lang={{lang.id}}&type={{type.id}}">{{type.type}}</a>
-            </p>
-            {% for i_snippet in object_list %}
-            <div class="mt-4 border-t-2">
-                <p>タイトル : {{i_snippet.title}}</p>
-                {% if i_snippet.explanation is not None %}
-                    <p>説明 : {{i_snippet.explanation | linebreaksbr}}</p>
-                {% endif %}
-                <p class="bg-[#eadfca] p-2 my-4 rounded-md"><code>{{i_snippet.code | linebreaksbr}}</code></p>
-                {% if user.id == person.id %}
-                <p>
-                    <a href="{% url 'snippet_app:update' pk=i_snippet.id %}?person={{person.id}}" class="bg-[#9ec3bc] p-2 rounded-md">編集する</a>
-                    <a href="{% url 'snippet_app:delete' pk=i_snippet.id %}?person={{person.id}}" class="bg-[#9ec3bc] p-2 rounded-md">削除する</a>
+            </nav>
+            <main  class="w-[80%]">
+
+                <p class="text-2xl py-2">
+                    <a href="{% url 'snippet_app:list' %}?person={{person.id}}">{{person.username}} の snippet </a>
+                    >>> <a href="{% url 'snippet_app:list' %}?person={{person.id}}&lang={{lang.id}}">{{lang.lang}}</a>
+                    >>> <a href="{% url 'snippet_app:list' %}?person={{person.id}}&lang={{lang.id}}&type={{type.id}}">{{type.type}}</a>
                 </p>
-                {% endif %}
-            </div>
-            {% endfor %}
-    </main>
+                {% for i_snippet in object_list %}
+                <div class="mt-4 border-t-2">
+                    <p>タイトル : {{i_snippet.title}}</p>
+                    {% if i_snippet.explanation is not None %}
+                        <p>説明 : {{i_snippet.explanation | linebreaksbr}}</p>
+                    {% endif %}
+                    <p class="bg-[#eadfca] p-2 my-4 rounded-md"><code>{{i_snippet.code | linebreaksbr}}</code></p>
+                    {% if user.id == person.id %}
+                    <p>
+                        <a href="{% url 'snippet_app:update' pk=i_snippet.id %}?person={{person.id}}" class="bg-[#9ec3bc] p-2 rounded-md">編集する</a>
+                        <a href="{% url 'snippet_app:delete' pk=i_snippet.id %}?person={{person.id}}" class="bg-[#9ec3bc] p-2 rounded-md">削除する</a>
+                    </p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+        </main>
+    </div>
+    <div class="h-[7%] mb-[3%] flex flex-row-reverse [&>a]:mx-4
+     [&>a]:bg-[#9ec3bc] [&>a]:p-2 [&>a]:rounded-md">
+        {% if user.id == person.id %}
+            <a href="{% url 'snippet_app:chusername' pk=1 %}">
+                ユーザ名を変更
+            </a>
+            <a href="{% url 'snippet_app:create' %}">
+                snippet を作成
+            </a>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}
 
