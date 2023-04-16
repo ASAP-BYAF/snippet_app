@@ -4,7 +4,7 @@
 
 {% block contents %}
 <div>
-    <div class="min-h-[80%] flex flex-row">
+    <div class="flex flex-row">
         <nav class="w-[10%] border-r-2 mx-4">
 
             {% for i_list in lang_type_snippet %}
@@ -60,7 +60,7 @@
                 {% endfor %}
         </main>
     </div>
-    <div class="h-[7%] mb-[3%] flex flex-row-reverse [&>a]:mx-4
+    <div class="fixed bottom-0 right-0 h-[7%] mb-[3%] flex flex-row-reverse [&>a]:mx-4
      [&>a]:bg-[#9ec3bc] [&>a]:p-2 [&>a]:rounded-md">
         {% if user.id == person.id %}
             <a href="{% url 'snippet_app:chusername' pk=1 %}">
