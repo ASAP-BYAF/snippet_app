@@ -4,6 +4,8 @@ from .settings_common import *
 DEBUG = True
 ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOSTS')]
 
+INSTALLED_APPS.append('django_ses')
+
 AWS_SES_ACCESS_KEY_ID=os.environ.get('AWS_SES_ACCESS_KEY_ID')
 AWS_SES_SECRET_ACCESS_KEY=os.environ.get('AWS_SES_SECRET_ACCESS_KEY')
 EMAIL_BACKEND='django_ses.SESBackend'
