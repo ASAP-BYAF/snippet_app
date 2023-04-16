@@ -92,3 +92,9 @@ class SnippetForm(forms.ModelForm):
                 raise forms.ValidationError('新しい分類が入力されていません。')
             if Type.objects.filter(lang__lang__iexact = lang, type__iexact = new_type):
                 raise forms.ValidationError('既に登録されている分類です。')
+
+
+class UsernameChangeForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ["username"]

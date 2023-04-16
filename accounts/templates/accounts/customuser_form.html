@@ -1,0 +1,37 @@
+{% extends 'snippet_app/base.html' %}
+
+{% block title %} Change username {% endblock %}
+
+{% block contents %}
+
+<form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+    <div id = {{field.auto_id}}>
+        <p>{{ field.label_tag}}</p>
+            {{ field }}
+    </div>
+    {% endfor %}
+    <input type="submit" value="click">
+</form>
+<div>
+    {% for field in form %}
+
+    <div>
+    {% comment %} 各フィールドのエラー {% endcomment %}
+        {% if field.errors %}
+            {% for error in field.errors %}
+            <div>{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    {% endfor %}
+    {% for non_field_error in form.non_field_errors %}
+    <div>
+        {{non_field_error}}
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

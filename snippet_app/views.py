@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 
 from .models import Lang, Type, Snippet
-from .forms import SnippetForm
+from .forms import SnippetForm, UsernameChangeForm
 from accounts.models import CustomUser
 
 
@@ -194,3 +194,18 @@ def save_new_lang(user, lang):
     return new_lang
 
 
+class UsernameChangeView(LoginRequiredMixin, GetCustomUserMixin, UpdateView):
+    model = CustomUser
+    form_class = UsernameChangeForm
+    success_url = reverse_lazy('snippet_app:list')
+    login_url = '/accounts/login/'
+    redirect_field_name = 'redirect_to'
+    def form_valid(self, form):
+
+        """If the form is valid, save the associated model."""
+        user = CustomUser.objects.get(id=self.request.user.id)
+        user.username = form.cleaned_data["username"]
+        user.save()
+        messages.add_message(self.request, messages.SUCCESS, 'ユーザー名が変更されました。')
+
+        return HttpResponseRedirect(self.get_success_url())
