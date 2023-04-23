@@ -19,11 +19,8 @@ class GetCustomUserMixin:
         })
         return super().get_context_data(**kwargs)
 
-class IndexView(TemplateView):
-
-    def get(self, request):
-        return render(request, 'snippet_app/index.html')
-
+class IndexView(GetCustomUserMixin, TemplateView):
+    template_name = 'snippet_app/index.html'
 
 class SnippetCreateView(LoginRequiredMixin, GetCustomUserMixin, CreateView):
     model = Snippet
