@@ -39,7 +39,7 @@
             <main  class="w-[80%]">
 
                 <p class="text-2xl py-2">
-                    <a href="{% url 'snippet_app:list' %}?person={{person.id}}">{{person.username}} の snippet </a>
+                    <a href="{% url 'snippet_app:list' %}?person={{person.id}}">"{{person.username}}" の snippet </a>
                     >>> <a href="{% url 'snippet_app:list' %}?person={{person.id}}&lang={{lang.id}}">{{lang.lang}}</a>
                     >>> <a href="{% url 'snippet_app:list' %}?person={{person.id}}&lang={{lang.id}}&type={{type.id}}">{{type.type}}</a>
                 </p>
