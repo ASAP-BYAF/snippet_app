@@ -49,7 +49,8 @@ class SnippetForm(forms.ModelForm):
         )
         self.fields['new_lang'] = forms.CharField(
             label='新しい言語を入力',
-            required=False
+            required=False,
+            widget = forms.TextInput(attrs={'class': 'form-title'})
         )
 
         type_list = [(f'{i_lang.id}.{i_type.id}', i_type.type) for i_lang in lang_queryset
@@ -63,7 +64,8 @@ class SnippetForm(forms.ModelForm):
         )
         self.fields['new_type'] = forms.CharField(
             label='新しい分類を入力',
-            required=False
+            required=False,
+            widget=forms.TextInput(attrs={'class': 'form-title'})
         )
 
         # フィールドの並び順を設定
