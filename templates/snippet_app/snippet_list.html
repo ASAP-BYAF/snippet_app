@@ -63,17 +63,6 @@
                 {% endfor %}
         </main>
     </div>
-    <div class="fixed bottom-0 right-0 h-[7%] mb-[3%] flex flex-row-reverse [&>a]:mx-4
-     [&>a]:bg-[#9ec3bc] [&>a]:p-2 [&>a]:rounded-md">
-        {% if user.id == person.id %}
-            <a href="{% url 'snippet_app:chusername' pk=1 %}">
-                ユーザ名を変更
-            </a>
-            <a href="{% url 'snippet_app:create' %}">
-                snippet を作成
-            </a>
-        {% endif %}
-    </div>
 </div>
 {% endblock %}
 
