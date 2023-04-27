@@ -1,0 +1,29 @@
+{% extends 'snippet_app/base.html' %}
+
+{% block title %} Serach_Result {% endblock %}
+
+{% block contents %}
+<div>
+    <main  class="w-[80%]">
+        {% for i_snippet in object_list %}
+        <div class="mt-4 border-t-2">
+            <p>タイトル : {{i_snippet.3.title}}</p>
+            {% if i_snippet.3.explanation is not None %}
+                <p>説明 : {{i_snippet.3.explanation | linebreaksbr}}</p>
+            {% endif %}
+            <p class="relative bg-[#eadfca] p-2 my-4 rounded-md">
+                <code>{{i_snippet.3.code | linebreaksbr}}</code>
+                <button type="button" class="copy-btn absolute top-2 right-2 bg-[#9ec3bc] rounded-md">Copy!</button>
+            </p>
+            <p>
+                <a href="{% url 'snippet_app:list'%}?person={{i_snippet.0.id}}&lang={{i_snippet.1.id}}&type={{i_snippet.2.id}}" 
+                    class="bg-[#9ec3bc] p-2 rounded-md">
+                    From : {{i_snippet.0.username}} >>> {{i_snippet.1.lang}} >>> {{i_snippet.2.type}}
+                </a>
+            </p>
+        </div>
+        {% endfor %}
+    </main>
+</div>
+{% endblock %}
+

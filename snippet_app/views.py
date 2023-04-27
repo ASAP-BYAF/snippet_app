@@ -1,5 +1,8 @@
+import itertools
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
+from django.db.models import QuerySet
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
 from django.views.generic.edit import FormView
 from django.urls import reverse, reverse_lazy
@@ -218,9 +221,33 @@ class SnippetSearchView(FormView):
             url = reverse('snippet_app:list')
             parameters = urlencode({'person':self.request.POST['author'] })
             url += f'?{parameters}'
-            print(url)
 
         elif self.request.POST['refine_list'] == 'lang_type':
-            url = reverse('snippet_app:list')
+            url = reverse('snippet_app:search_res')
+            parameters = urlencode({
+                'lang':self.request.POST.get('filter_lang'),
+                'type':self.request.POST.get('filter_type'),
+            })
+            url += f'?{parameters}'
 
         return url
+
+class SnippetSearchResultView(GetCustomUserMixin, ListView):
+    model = Snippet
+    template_name = 'snippet_app/snippet_search_result.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs = super().get_context_data(**kwargs)
+        kwargs.update({
+            'object_list': [(i_snippet.type.lang.user, i_snippet.type.lang, i_snippet.type, i_snippet) for i_snippet in self.queryset]
+        })
+        return kwargs
+
+    def get_queryset(self):
+        lang = Lang.objects.filter(lang__icontains=self.request.GET['lang'])
+        type = [i_lang.type_set.filter(type__icontains=self.request.GET.get('type')) for i_lang in lang]
+        type = list(itertools.chain.from_iterable(type))
+        queryset = [i_type.snippet_set.all()  for i_type in type ]
+        queryset = list(itertools.chain.from_iterable(queryset))
+        self.queryset = queryset
+        return queryset

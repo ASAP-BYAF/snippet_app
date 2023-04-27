@@ -10,6 +10,7 @@ urlpatterns = [
     path('update/<int:pk>/', views.SnippetUpdateView.as_view(), name='update'),
     path('delete/<int:pk>/', views.SnippetDeleteView.as_view(), name='delete'),
     path('search/', views.SnippetSearchView.as_view(), name='search'),
+    path('search_res/', views.SnippetSearchResultView.as_view(), name='search_res'),
     path('change_username/<int:pk>/', views.UsernameChangeView.as_view(), name='chusername'),
 ]
 
