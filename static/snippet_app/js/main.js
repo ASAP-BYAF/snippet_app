@@ -62,7 +62,8 @@ if (searchForm) {
     const filterTypeInput = searchForm.filter_type
 
     searchForm.addEventListener('change', handleChange);
-
+    window.addEventListener("load", handleChange);
+    
     function handleChange() {
         for (let i_refine=0; i_refine<refineList.length; i_refine++) {
             const i_opt = refineList[i_refine];
