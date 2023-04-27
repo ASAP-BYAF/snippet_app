@@ -116,7 +116,8 @@ class SnippetSearchForm(forms.Form):
     refine_list = forms.ChoiceField(
         widget=forms.RadioSelect,
         choices=REFINE_LIST,
-        label='絞り込む要素を選択'
+        label='絞り込む要素を選択',
+        initial = 'author'
     )
 
     AUTH_LIST = [(i_auth.id, i_auth.username) for i_auth in CustomUser.objects.all()]
@@ -135,5 +136,8 @@ class SnippetSearchForm(forms.Form):
     filter_type = forms.CharField(
         label='分類を入力',
         required=False,
-        widget=forms.TextInput(attrs={'class': 'form-title'})
+        widget=forms.TextInput(attrs={
+            'class': 'form-title',
+            'placeholder': '空欄も可'
+        })
     )
