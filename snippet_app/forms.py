@@ -106,3 +106,34 @@ class UsernameChangeForm(forms.ModelForm):
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-title'}),
         }
+
+class SnippetSearchForm(forms.Form):
+    REFINE_LIST = [
+        ("author", "作成者"),
+        ("lang_type", "言語および分類"),
+    ]
+
+    refine_list = forms.ChoiceField(
+        widget=forms.RadioSelect,
+        choices=REFINE_LIST,
+        label='絞り込む要素を選択'
+    )
+
+    AUTH_LIST = [(i_auth.id, i_auth.username) for i_auth in CustomUser.objects.all()]
+    author = forms.ChoiceField(
+        choices=AUTH_LIST,
+        required=False,
+        widget=forms.RadioSelect,
+        label='人物で絞り込む')
+
+    filter_lang = forms.CharField(
+        label='言語を入力',
+        required=False,
+        widget = forms.TextInput(attrs={'class': 'form-title'})
+    )
+
+    filter_type = forms.CharField(
+        label='分類を入力',
+        required=False,
+        widget=forms.TextInput(attrs={'class': 'form-title'})
+    )

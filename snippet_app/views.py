@@ -1,12 +1,13 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
-from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.views.generic.edit import FormView
+from django.urls import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
+from urllib.parse import urlencode
 
 from .models import Lang, Type, Snippet
-from .forms import SnippetForm, UsernameChangeForm
+from .forms import SnippetForm, UsernameChangeForm, SnippetSearchForm
 from accounts.models import CustomUser
 
 
@@ -206,3 +207,20 @@ class UsernameChangeView(LoginRequiredMixin, GetCustomUserMixin, UpdateView):
         messages.add_message(self.request, messages.SUCCESS, 'ユーザー名が変更されました。')
 
         return HttpResponseRedirect(self.get_success_url())
+
+class SnippetSearchView(FormView):
+    template_name = 'snippet_app/snippet_search.html'
+    form_class = SnippetSearchForm
+
+    def get_success_url(self):
+        """Return the URL to redirect to after processing a valid form."""
+        if self.request.POST['refine_list'] == 'author':
+            url = reverse('snippet_app:list')
+            parameters = urlencode({'person':self.request.POST['author'] })
+            url += f'?{parameters}'
+            print(url)
+
+        elif self.request.POST['refine_list'] == 'lang_type':
+            url = reverse('snippet_app:list')
+
+        return url

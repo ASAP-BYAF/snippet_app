@@ -26,15 +26,9 @@
           <a href="{% url 'snippet_app:index' %}">Top</a>
       </p>
 
-
-      <details>
-          <summary> 皆の snippet </summary>
-          {% for i_person in person_list %}
-              <p>
-                  <a href="{% url 'snippet_app:list' %}?person={{i_person.id}}">{{i_person.username}}</a>
-              </p>
-          {% endfor %}
-      </details>
+      <p>
+          <a href="{% url 'snippet_app:search' %}">snippet を探す</a>
+      </p>
 
         {% if user.is_authenticated %}
             <p>

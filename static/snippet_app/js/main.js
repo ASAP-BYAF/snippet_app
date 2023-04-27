@@ -36,33 +36,70 @@ if (createForm) {
         handleDisplay(typeList[typeList.length-1].checked, newTypeField)
         handleRequired(typeList[typeList.length-1].checked, newTypeField.lastElementChild)
     }
+    
+}
 
-    function handleDisplay(ifDisplay, target){
+// list が表示されているときのコピーボタンの設定
+const copyBtn = document.getElementsByClassName('copy-btn');
+if (copyBtn) {
+    for (var i = copyBtn.length - 1; i >= 0; i--) {
+            copyBtn[i].addEventListener("click", function(){
+                
+                // 選択しているテキストをクリップボードにコピーする
+                navigator.clipboard.writeText(this.previousElementSibling.innerText);
+                
+                // コピーをお知らせする
+        alert("コピーできました！" );
+        });
+    }
+}
+
+const searchForm = document.getElementById('snippet-search');
+if (searchForm) {
+    const refineList = searchForm.refine_list
+    const authorInput = searchForm.author
+    const filterLangInput = searchForm.filter_lang
+    const filterTypeInput = searchForm.filter_type
+
+    searchForm.addEventListener('change', handleChange);
+
+    function handleChange() {
+        for (let i_refine=0; i_refine<refineList.length; i_refine++) {
+            const i_opt = refineList[i_refine];
+            if (i_opt.checked) {
+                if (i_opt.value === 'author'){
+                    displayRefineList(true);
+                }
+                else if (i_opt.value === 'lang_type'){
+                    displayRefineList(false);
+                }
+            }
+        }
+    }
+
+    function displayRefineList(flag) {
+        for (let j_auth=0; j_auth<authorInput.length; j_auth++) {
+            handleDisplay(flag, authorInput[j_auth].parentElement);
+            handleRequired(flag, authorInput[j_auth]);
+        }
+        handleDisplay(!flag, filterLangInput.parentElement);
+        handleRequired(!flag, filterLangInput);
+        handleDisplay(!flag, filterTypeInput.parentElement);
+    }
+}
+
+function handleDisplay(ifDisplay, target){
     if(ifDisplay){
         target.style.display= "block";
     } else {
         target.style.display= "None";
     }
-    }
+}
 
-    function handleRequired(ifRequired, target){
+function handleRequired(ifRequired, target){
     if(ifRequired){
         target.required=true;
     } else {
         target.required=false;
     }
-    }
-}
-
-const copyBtn = document.getElementsByClassName('copy-btn');
-
-for (var i = copyBtn.length - 1; i >= 0; i--) {
-  copyBtn[i].addEventListener("click", function(){
-
-  // 選択しているテキストをクリップボードにコピーする
-  navigator.clipboard.writeText(this.previousElementSibling.innerText);
-
-  // コピーをお知らせする
-  alert("コピーできました！" );
-  });
 }
