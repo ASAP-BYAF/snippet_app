@@ -1,29 +1,31 @@
 from rest_framework import serializers
-from .models import Snippet
+from .models import User
 
 
-class SnippetSerializer(serializers.Serializer):
+class UserSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
-    code = serializers.CharField(style={'base_template': 'textarea.html'})
+    user_id = serializers.CharField(style={'base_template': 'textarea.html'})
+    password = serializers.CharField(style={'base_template': 'textarea.html'})
 
 
     def create(self, validated_data):
         """
-        新しいSnippetインスタンスを作成して返す。
+        新しいUserインスタンスを作成して返す。
         インスタンスは、バリデーション済みのデータを基にして作成する。
         """
-        return Snippet.objects.create(**validated_data)
+        return User.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         """
-        既存のSnippetインスタンスを変更して返す。
+        既存のUserインスタンスを変更して返す。
         インスタンスは、バリデーション済みのデータを基にして変更する。
         """
-        instance.code = validated_data.get('code', instance.code)
+        instance.user_id = validated_data.get('user_id', instance.user_id)
+        instance.password = validated_data.get('password', instance.password)
         instance.save()
         return instance
 
-class SnippetModelSerializer(serializers.ModelSerializer):
+class UserModelSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Snippet
-        fields = ('id', 'code',)
+        model = User
+        fields = ('id', 'user_id', 'password')

@@ -4,9 +4,6 @@ from django.db import models
 
 from django.db import models
 
-class Snippet(models.Model):
-    created = models.DateTimeField(auto_now_add=True)
-    code = models.TextField()
-
-    class Meta:
-        ordering = ('created',)
+class User(models.Model):
+    user_id = models.CharField(max_length=20)
+    password = models.CharField(max_length=20)
