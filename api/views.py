@@ -35,7 +35,7 @@ def user_detail(request, pk):
     try:
         user = User.objects.get(pk=pk)
     except User.DoesNotExist:
-        return HttpResponse(status=404)
+        return HttpResponse(f'id = {pk} の user は存在しません。', status=404)
 
     if request.method == 'GET':
         serializer = UserSerializer(user)
@@ -51,4 +51,4 @@ def user_detail(request, pk):
 
     elif request.method == 'DELETE':
         user.delete()
-        return HttpResponse(status=204)
+        return HttpResponse(f'id = {pk} の user が削除されました。', status=204)
