@@ -25,6 +25,26 @@ class UserSerializer(serializers.Serializer):
         instance.save()
         return instance
 
+    def validate_user_id(self, value):
+
+         if len(value) < 5:
+             raise serializers.ValidationError("user_id が短すぎます。")
+         return value
+
+    def validate_password(self, value):
+
+         if len(value) < 5:
+             raise serializers.ValidationError("password が短すぎます。")
+         return value
+
+    def validate(self, data):
+
+        user_id = data.get('user_id')
+        password = data.get('password')
+
+        if user_id == password:
+            raise serializers.ValidationError("user_id と password の類似度が高いです。")
+        return data
 class UserModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
