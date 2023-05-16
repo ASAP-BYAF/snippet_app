@@ -4,7 +4,7 @@
 
 {% block contents %}
 
-<form id='snippet-create', method="post">
+<form id='snippet-create', method="post" class="ml-4">
     {% csrf_token %}
     {% for field in form %}
     <div id = {{field.auto_id}}>
