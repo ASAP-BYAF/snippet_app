@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User
+from accounts.models import CustomUser
 
 
 class UserSerializer(serializers.Serializer):
@@ -45,7 +45,8 @@ class UserSerializer(serializers.Serializer):
         if user_id == password:
             raise serializers.ValidationError("user_id と password の類似度が高いです。")
         return data
-class UserModelSerializer(serializers.ModelSerializer):
+
+class CustomUserModelSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ('id', 'user_id', 'password')
+        model = CustomUser
+        fields = ('id')
