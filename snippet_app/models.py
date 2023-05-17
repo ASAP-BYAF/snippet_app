@@ -13,7 +13,7 @@ class User(models.Model):
 class Lang(models.Model):
     lang = models.CharField(max_length=100)
     ### 他のテーブルとの関連
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='lang_set')
 
     def __str__(self):
         return f'<ID = {self.id}> {self.user.username} --- {self.lang}'

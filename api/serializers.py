@@ -48,9 +48,10 @@ class UserSerializer(serializers.Serializer):
         return data
 
 class CustomUserModelSerializer(serializers.ModelSerializer):
+    lang_set = serializers.StringRelatedField(many=True)
     class Meta:
         model = CustomUser
-        fields = ('id', 'username')
+        fields = ('id', 'username', 'lang_set')
         # fields = '__all__'
 
 class SnippetModelSerializer(serializers.ModelSerializer):
