@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from snippet_app.models import Snippet
 from accounts.models import CustomUser
 
 
@@ -49,4 +50,13 @@ class UserSerializer(serializers.Serializer):
 class CustomUserModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ('id')
+        fields = ('id', 'username')
+        # fields = '__all__'
+
+class SnippetModelSerializer(serializers.ModelSerializer):
+
+    type = serializers.ReadOnlyField(source='type.type')
+    class Meta:
+        model = Snippet
+        fields = ('id', 'code', 'type')
+        # fields = '__all__'
