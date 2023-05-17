@@ -45,10 +45,12 @@
                 </p>
                 {% for i_snippet in object_list %}
                 <div class="mt-4 border-t-2">
-                    <p>タイトル : {{i_snippet.title}}</p>
-                    {% if i_snippet.explanation is not None %}
-                        <p>説明 : {{i_snippet.explanation | linebreaksbr}}</p>
-                    {% endif %}
+                    <ul class="ml-6 list-disc">
+                        <li>タイトル : {{i_snippet.title}}</li>
+                        {% if i_snippet.explanation is not None %}
+                            <li>説明 : {{i_snippet.explanation | linebreaksbr}}</li>
+                        {% endif %}
+                    </ul>
                     <p class="relative bg-[#eadfca] p-2 my-4 rounded-md">
                         <code>{{i_snippet.code | linebreaksbr}}</code>
                         <button type="button" class="copy-btn absolute top-2 right-2 bg-[#9ec3bc] rounded-md">Copy!</button>
