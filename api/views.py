@@ -63,7 +63,7 @@ def user_detail(request, pk):
         return HttpResponse(f'id = {pk} の user が削除されました。', status=204)
 
 
-class CustomUserList(APIView):
+class CustomUserSnippetList(APIView):
     """
     List all users, or create a new user.
     """
