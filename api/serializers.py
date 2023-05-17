@@ -56,7 +56,9 @@ class CustomUserModelSerializer(serializers.ModelSerializer):
 class SnippetModelSerializer(serializers.ModelSerializer):
 
     type = serializers.ReadOnlyField(source='type.type')
+    lang = serializers.ReadOnlyField(source='type.lang.lang')
+    user = serializers.ReadOnlyField(source='type.lang.user.username')
     class Meta:
         model = Snippet
-        fields = ('id', 'code', 'type')
+        fields = ('id', 'code', 'type', 'lang', 'user')
         # fields = '__all__'
