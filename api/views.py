@@ -11,9 +11,10 @@ from rest_framework import status
 
 # from .models import User
 # from .serializers import UserSerializer
-from .serializers import SnippetModelSerializer
+from .serializers import LangModelSerializer
+from .serializers import FromSnippetModelSerializer
 from .serializers import CustomUserModelSerializer
-from snippet_app.models import Snippet
+from snippet_app.models import Lang, Snippet
 from accounts.models import CustomUser
 
 @csrf_exempt # postman等にはcsrfは無いので無効化
@@ -81,7 +82,7 @@ class CustomUserList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class SnippetList(APIView):
+class FromSnippetList(APIView):
     """
     List all users, or create a new user.
     """
@@ -90,11 +91,29 @@ class SnippetList(APIView):
 
     def get(self, request, format=None):
         users = Snippet.objects.all()
-        serializer = SnippetModelSerializer(users, many=True)
+        serializer = FromSnippetModelSerializer(users, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        serializer = SnippetModelSerializer(data=request.data)
+        serializer = FromSnippetModelSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class LangList(APIView):
+    """
+    List all users, or create a new user.
+    """
+    # authentication_classes = (permissions.AllowAny,)
+    # permission_classes = (permissions.AllowAny,)
+
+    def get(self, request, format=None):
+        users = Lang.objects.all()
+        serializer = LangModelSerializer(users, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = LangModelSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from snippet_app.models import Lang, Snippet
+from snippet_app.models import Lang, Type, Snippet
 from accounts.models import CustomUser
 
 
@@ -47,27 +47,45 @@ class UserSerializer(serializers.Serializer):
             raise serializers.ValidationError("user_id と password の類似度が高いです。")
         return data
 
+class SnippetModelSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Snippet
+        fields = ('code',)
+
+
+class TypeModelSerializer(serializers.ModelSerializer):
+
+    snippet_rev = SnippetModelSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Type
+        fields = ('type', 'snippet_rev')
+
 class LangModelSerializer(serializers.ModelSerializer):
+
+    type_rev = TypeModelSerializer(many=True, read_only=True)
 
     class Meta:
         model = Lang
-        fields = ('id', 'lang')
+        fields = ('lang', 'type_rev')
+        # fields = ('id', 'lang')
 
 
 class CustomUserModelSerializer(serializers.ModelSerializer):
 
-    lang_set = LangModelSerializer(many=True, read_only=True)
+    lang_rev = LangModelSerializer(many=True, read_only=True)
 
     class Meta:
         model = CustomUser
-        fields = ('id', 'username', 'lang_set')
+        fields = ('username', 'lang_rev')
         # fields = '__all__'
 
-class SnippetModelSerializer(serializers.ModelSerializer):
+class FromSnippetModelSerializer(serializers.ModelSerializer):
 
     type = serializers.ReadOnlyField(source='type.type')
     lang = serializers.ReadOnlyField(source='type.lang.lang')
-    user = serializers.ReadOnlyField(source='type.lang.user.username')
+    user = serializers.   ReadOnlyField(source='type.lang.user.username')
     class Meta:
         model = Snippet
         fields = ('id', 'code', 'type', 'lang', 'user')
