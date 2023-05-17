@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from snippet_app.models import Snippet
+from snippet_app.models import Lang, Snippet
 from accounts.models import CustomUser
 
 
@@ -47,8 +47,17 @@ class UserSerializer(serializers.Serializer):
             raise serializers.ValidationError("user_id と password の類似度が高いです。")
         return data
 
+class LangModelSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Lang
+        fields = ('id', 'lang')
+
+
 class CustomUserModelSerializer(serializers.ModelSerializer):
-    lang_set = serializers.StringRelatedField(many=True)
+
+    lang_set = LangModelSerializer(many=True, read_only=True)
+
     class Meta:
         model = CustomUser
         fields = ('id', 'username', 'lang_set')
