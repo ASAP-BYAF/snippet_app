@@ -23,7 +23,10 @@ class GetCustomUserMixin:
         })
         return super().get_context_data(**kwargs)
 
-class IndexView(GetCustomUserMixin, TemplateView):
+class IndexView(GetCustomUserMixin, ListView):
+    model = Snippet
+
+# class IndexView(GetCustomUserMixin, TemplateView):
     template_name = 'snippet_app/index.html'
 
 class SnippetCreateView(LoginRequiredMixin, GetCustomUserMixin, CreateView):
