@@ -51,12 +51,11 @@
                 {% endif %}
       
         </header>
-    
-        {% block header%}{% endblock %}
 
-        {% block contents%}{% endblock %}
+        <div>
+            {% block contents%}{% endblock %}
+        </div>
 
-        {% block footer%}{% endblock %}
         <div class="fixed bottom-0 right-0 h-[7%] mb-[3%] flex flex-row-reverse [&>a]:mx-4
             [&>a]:bg-[#9ec3bc] [&>a]:p-2 [&>a]:rounded-md">
             {% if request.user.is_authenticated %}
