@@ -89,16 +89,15 @@ class SnippetUpdateView(LoginRequiredMixin, GetCustomUserMixin, UpdateView):
         """If the form is valid, save the associated model."""
         snippet = form.save(commit=False)
 
-        # 既存の言語でスニペットを作成
         if (lang_id := self.request.POST['lang']) != '0':
             snippet.lang = Lang.objects.get(id=lang_id)
-            # 既存の言語でスニペットを作成
+            
             if (type_id := self.request.POST['type'].split('.')[-1]) != '0':
                 snippet.type = Type.objects.get(id=type_id)
-            # 新しい分類でスニペットを作成
+            # 新しい分類でスニペットを更新
             else:
                 snippet.type = save_new_type(self.request.POST['new_type'], snippet.lang)
-        # 新しい言語でスニペットを作成
+        # 新しい言語でスニペットを更新
         else:
             user = self.request.user
             snippet.lang = save_new_lang(user, self.request.POST['new_lang'])
