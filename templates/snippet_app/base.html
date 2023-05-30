@@ -1,57 +1,57 @@
 {% load static %}
 
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}{% endblock %}</title>
-    {% block head %}{% endblock %}
-    <script src="{% static 'snippet_app/js/main.js' %}" defer></script>
-    <link href="{% static 'snippet_app/css/dist/output.css' %}" rel="stylesheet">
-    <link href="{% static 'snippet_app/css/mystyle.css' %}" rel="stylesheet">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{% endblock %}</title>
+        {% block head %}{% endblock %}
+        <script src="{% static 'snippet_app/js/main.js' %}" defer></script>
+        <link href="{% static 'snippet_app/css/dist/output.css' %}" rel="stylesheet">
+        <link href="{% static 'snippet_app/css/mystyle.css' %}" rel="stylesheet">
+    </head>
 
-  <body>
-      {% if messages %}
-      <ul>
-          {% for message in messages %}
-          <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
-              {{ message }}
-          </li>
-          {% endfor %}
-      </ul>
-      {% endif %}
-
-    <header class="bg-[#aa998a] text-white p-4 text-3xl flex flex-1 justify-around">
-      <p>
-          <a href="{% url 'snippet_app:index' %}">Top</a>
-      </p>
-
-      <p>
-          <a href="{% url 'snippet_app:search' %}">snippet を探す</a>
-      </p>
-
-        {% if user.is_authenticated %}
-            <p>
-                <a href="{% url 'snippet_app:list' %}?person={{user.id}}">
-                    "{{user.username}}" の snippet
-                </a>
-            </p>
-        {% else %}
-            <p>
-                <a href="{%url 'account_login'%}">
-                    my_snippet
-                </a>
-            </p>
+    <body>
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+                {{ message }}
+            </li>
+            {% endfor %}
+        </ul>
         {% endif %}
-
-        {% if user.is_authenticated %}
-            <p><a href="{%url 'account_logout'%}">log out</a></p>
-        {% else %}
-            <p><a href="{%url 'account_login'%}">log in</a></p>
-        {% endif %}
-
-    </header>
-
+  
+        <header class="bg-[#aa998a] text-white p-4 text-3xl flex flex-1 justify-around">
+            <p>
+                <a href="{% url 'snippet_app:index' %}">Top</a>
+            </p>
+      
+            <p>
+                <a href="{% url 'snippet_app:search' %}">snippet を探す</a>
+            </p>
+      
+                {% if user.is_authenticated %}
+                    <p>
+                        <a href="{% url 'snippet_app:list' %}?person={{user.id}}">
+                            "{{user.username}}" の snippet
+                        </a>
+                    </p>
+                {% else %}
+                    <p>
+                        <a href="{%url 'account_login'%}">
+                            my_snippet
+                        </a>
+                    </p>
+                {% endif %}
+        
+                {% if user.is_authenticated %}
+                    <p><a href="{%url 'account_logout'%}">log out</a></p>
+                {% else %}
+                    <p><a href="{%url 'account_login'%}">log in</a></p>
+                {% endif %}
+      
+        </header>
+    
         {% block header%}{% endblock %}
 
         {% block contents%}{% endblock %}
