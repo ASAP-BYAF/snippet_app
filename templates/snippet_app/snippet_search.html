@@ -3,10 +3,10 @@
 {% block title %} Search {% endblock %}
 
 {% block contents %}
-<form id='snippet-search', method="post">
+<form id='snippet-search', method="post" class="ml-2">
     {% csrf_token %}
     {% for field in form %}
-    <div id = {{field.auto_id}}>
+    <div id = {{field.auto_id}} class="text-2xl mb-4">
         <p>{{ field.label_tag}}</p>
         {% if field.field.widget.input_type == 'radio' %}
             {% for item in field %}
