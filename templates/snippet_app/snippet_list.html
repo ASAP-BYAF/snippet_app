@@ -5,7 +5,7 @@
 {% block contents %}
 <div>
     <div class="flex flex-row">
-        <nav class="w-[10%] border-r-2 mx-4">
+        <nav class="w-[15%] border-r-2 mx-4">
 
             {% for i_list in lang_type_snippet %}
             <details class="border-b-2 py-2">
@@ -38,7 +38,7 @@
                 </details>
                 {% endfor %}
             </nav>
-            <main  class="w-[80%]">
+            <main  class="w-[85%]">
 
                 <p class="text-2xl py-2">
                     <a href="{% url 'snippet_app:list' %}?person={{person.id}}">"{{person.username}}" の snippet </a>
