@@ -4,29 +4,21 @@
 
 {% block contents %}
     {% for i_snippet in object_list %}
-    <div class="mx-auto my-4 w-[80%] border-t-2">
+    <div class="mx-auto my-4 w-[80%] border-t-2 relative">
         <ul class="ml-6 list-disc">
             <li>タイトル : {{i_snippet.title}}</li>
             {% if i_snippet.explanation is not None %}
                 <li>説明 : {{i_snippet.explanation | linebreaksbr}}</li>
             {% endif %}
-            <li>
-                <a href="{% url 'snippet_app:list' %}?person={{i_snippet.type.lang.user.id}}">
-                    "{{i_snippet.type.lang.user.username}}" の snippet
-                </a>
-                >>>
-                <a href="{% url 'snippet_app:list' %}?person={{i_snippet.type.lang.user.id}}&lang={{i_snippet.type.lang.id}}">
-                    {{i_snippet.type.lang.lang}}
-                </a>
-                >>>
-                <a href="{% url 'snippet_app:list' %}?person={{i_snippet.type.lang.user.id}}&lang={{i_snippet.type.lang.id}}&type={{i_snippet.type.id}}">
-                    {{i_snippet.type.type}}
-                </a>
-            </li>
         </ul>
         <p class="relative bg-[#eadfca] p-2 my-4 rounded-md">
             <code>{{i_snippet.code | linebreaksbr}}</code>
             <button type="button" class="copy-btn absolute top-2 right-2 bg-[#9ec3bc] rounded-md">Copy!</button>
+        </p>
+        <p class='absolute right-2 top-1'> 作成者: 
+            <a href="{% url 'snippet_app:list' %}?person={{i_snippet.type.lang.user.id}}">
+                "{{i_snippet.type.lang.user.username}}"
+            </a>
         </p>
     </div>
 
