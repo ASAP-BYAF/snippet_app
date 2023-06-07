@@ -80,7 +80,6 @@ if (searchForm) {
 
     function displayRefineList(flag) {
         for (let j_auth=0; j_auth<authorInput.length; j_auth++) {
-            handleDisplay(flag, authorInput[j_auth].parentElement);
             handleRequired(flag, authorInput[j_auth]);
         }
         handleDisplay(flag, authorInput[0].parentElement.parentElement);
