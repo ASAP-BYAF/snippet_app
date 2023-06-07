@@ -83,6 +83,7 @@ if (searchForm) {
             handleDisplay(flag, authorInput[j_auth].parentElement);
             handleRequired(flag, authorInput[j_auth]);
         }
+        handleDisplay(flag, authorInput[0].parentElement.parentElement);
         handleDisplay(!flag, filterLangInput.parentElement);
         handleRequired(!flag, filterLangInput);
         handleDisplay(!flag, filterTypeInput.parentElement);
