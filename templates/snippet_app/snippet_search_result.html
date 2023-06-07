@@ -4,9 +4,9 @@
 
 {% block contents %}
 <div>
-    <main  class="w-[80%]">
+    <main class="w-[80%] mx-auto">
         {% for i_snippet in object_list %}
-        <div class="mt-4 border-t-2">
+        <div class="relative mt-4 border-t-2">
             <p>タイトル : {{i_snippet.3.title}}</p>
             {% if i_snippet.3.explanation is not None %}
                 <p>説明 : {{i_snippet.3.explanation | linebreaksbr}}</p>
@@ -17,7 +17,7 @@
             </p>
             <p>
                 <a href="{% url 'snippet_app:list'%}?person={{i_snippet.0.id}}&lang={{i_snippet.1.id}}&type={{i_snippet.2.id}}" 
-                    class="bg-[#9ec3bc] p-2 rounded-md">
+                    class="absolute right-2 top-1">
                     From : {{i_snippet.0.username}} >>> {{i_snippet.1.lang}} >>> {{i_snippet.2.type}}
                 </a>
             </p>
