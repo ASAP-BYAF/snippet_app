@@ -7,11 +7,11 @@
 <form id='snippet-create', method="post" class="ml-4">
     {% csrf_token %}
     {% for field in form %}
-    <div id = {{field.auto_id}}>
-        <p>{{ field.label_tag}}</p>
+    <div id = {{field.auto_id}} class="mb-4">
+        <p class="text-2xl" >{{ field.label_tag}}</p>
         {% if field.field.widget.input_type == 'radio' %}
             {% for item in field %}
-                <p>{{ item.tag }}<label for='{{ item.id_for_label }}'>{{ item.choice_label }}</label></p>
+                <p class="text-xl" >{{ item.tag }}<label for='{{ item.id_for_label }}'>{{ item.choice_label }}</label></p>
             {% endfor %}
 
         {% else %}
