@@ -82,7 +82,7 @@ class SnippetForm(forms.ModelForm):
             lang = self.cleaned_data['new_lang']
             if not lang.replace(' ', '').replace('　', ''):
                 raise forms.ValidationError('新しい言語が入力されていません。')
-            if Lang.objects.filter(user = self.user, lang__iexact = lang):
+            if Lang.objects.filter(user__id = self.user.id, lang__iexact = lang):
                 raise forms.ValidationError('既に登録されている言語です。')
 
         else:
@@ -92,7 +92,7 @@ class SnippetForm(forms.ModelForm):
             new_type = self.cleaned_data['new_type']
             if not new_type.replace(' ', '').replace('　', ''):
                 raise forms.ValidationError('新しい分類が入力されていません。')
-            if Type.objects.filter(lang__lang__iexact = lang, type__iexact = new_type):
+            if Type.objects.filter(lang__user__id = self.user.id, lang__lang__iexact = lang, type__iexact = new_type):
                 raise forms.ValidationError('既に登録されている分類です。')
 
 
