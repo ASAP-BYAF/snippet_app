@@ -44,6 +44,13 @@ class SnippetCreateView(LoginRequiredMixin, GetCustomUserMixin, CreateView):
             }
         )
         return kwargs
+
+    def get_success_url(self, lang_id, type_id):
+        url = super().get_success_url()
+        return f'{url}?person={self.request.user.id}' \
+               f'&lang={lang_id}' \
+               f'&type={type_id}'
+
     def form_valid(self, form):
         """If the form is valid, save the associated model."""
         snippet = form.save(commit=False)
@@ -66,7 +73,7 @@ class SnippetCreateView(LoginRequiredMixin, GetCustomUserMixin, CreateView):
         snippet.save()
         messages.add_message(self.request, messages.SUCCESS, '新しいスニペットを作成しました。')
         self.object = snippet
-        return HttpResponseRedirect(self.get_success_url())
+        return HttpResponseRedirect(self.get_success_url(snippet.lang.id, snippet.type.id))
 
 
 class SnippetUpdateView(LoginRequiredMixin, GetCustomUserMixin, UpdateView):
