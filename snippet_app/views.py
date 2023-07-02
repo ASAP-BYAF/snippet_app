@@ -126,10 +126,11 @@ class SnippetDeleteView(LoginRequiredMixin, GetCustomUserMixin, DeleteView):
         # messages.add_message(self.request, messages.SUCCESS, 'スニペットを削除しました。')
         return super().delete(request, *args, **kwargs)
     def get_context_data(self, **kwargs):
+        kwargs = super().get_context_data(**kwargs)
         kwargs.update(
             {'snippet': kwargs['object']}
         )
-        return super().get_context_data(**kwargs)
+        return kwargs
 
 
 class SnippetListView(GetCustomUserMixin, ListView):
@@ -260,3 +261,31 @@ class SnippetSearchResultView(GetCustomUserMixin, ListView):
         queryset = list(itertools.chain.from_iterable(queryset))
         self.queryset = queryset
         return queryset
+
+class TypeDeleteView(LoginRequiredMixin, GetCustomUserMixin, DeleteView):
+    model = Type
+    success_url = reverse_lazy('snippet_app:list')
+    login_url = '/accounts/login/'
+    redirect_field_name = 'redirect_to'
+
+    def get_context_data(self, **kwargs):
+        kwargs = super().get_context_data(**kwargs)
+        kwargs.update(
+            {'type': kwargs['object']}
+        )
+        return kwargs
+
+
+class LangDeleteView(LoginRequiredMixin, GetCustomUserMixin, DeleteView):
+    model = Lang
+    success_url = reverse_lazy('snippet_app:list')
+    login_url = '/accounts/login/'
+    redirect_field_name = 'redirect_to'
+
+    def get_context_data(self, **kwargs):
+        kwargs = super().get_context_data(**kwargs)
+        kwargs.update(
+            {'lang': kwargs['object']}
+        )
+        return kwargs
+

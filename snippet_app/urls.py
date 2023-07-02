@@ -12,5 +12,7 @@ urlpatterns = [
     path('search/', views.SnippetSearchView.as_view(), name='search'),
     path('search_res/', views.SnippetSearchResultView.as_view(), name='search_res'),
     path('change_username/<int:pk>/', views.UsernameChangeView.as_view(), name='chusername'),
+    path('delete_type/<int:pk>/', views.TypeDeleteView.as_view(), name='delete_type'),
+    path('delete_lang/<int:pk>/', views.LangDeleteView.as_view(), name='delete_lang'),
 ]
 
