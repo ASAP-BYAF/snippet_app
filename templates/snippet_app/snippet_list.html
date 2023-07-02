@@ -45,6 +45,8 @@
                     >>> <a href="{% url 'snippet_app:list' %}?person={{person.id}}&lang={{lang.id}}">{{lang.lang}}</a>
                     >>> <a href="{% url 'snippet_app:list' %}?person={{person.id}}&lang={{lang.id}}&type={{type.id}}">{{type.type}}</a>
                 </p>
+                    <a href="{% url 'snippet_app:delete_lang' pk=lang.id %}" class="bg-[#9ec3bc] p-2 rounded-md">言語 ({{lang.lang}}) を削除</a>
+                    <a href="{% url 'snippet_app:delete_type' pk=type.id %}" class="bg-[#9ec3bc] p-2 rounded-md">分類 ({{type.type}}) を削除</a>
                 {% for i_snippet in object_list %}
                 <div class="mt-4 border-t-2">
                     <ul class="ml-6 list-disc">
